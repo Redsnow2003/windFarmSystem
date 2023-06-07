@@ -1,0 +1,1 @@
+{"version":3,"sources":["config.js"],"names":["PLAGFORM_CONFIG","baseUrl"],"mappings":";;AAAA,IAAIA,eAAe,GAAC,EAApB;AACAA,eAAe,CAACC,OAAhB,GAAwB,mCAAxB","sourcesContent":["var PLAGFORM_CONFIG={};\r\nPLAGFORM_CONFIG.baseUrl=\"http://localhost:8080/wpfsserver/\";"],"file":"config.dev.js"}

@@ -1,0 +1,30 @@
+log:
+  # 控制台日志参数
+  enableConsole: true
+  consoleJSONFormat: true
+  consoleLevel: Debug
+  # 文件日志参数
+  enableFile: true
+  fileJSONFormat: false
+  fileLevel: Debug
+  fileLocation: log/log.txt
+  maxAge: 28 # 最大天数
+  maxSize: 100 # 文件最大容量
+  compress: true # 是否压缩
+
+#web服务配置
+webapi:
+  uri: 0.0.0.0:8080
+
+#数据库配置
+mysqlnd:
+  username: root
+  password: 123
+  host: 127.0.0.1
+  port: 3306
+  database: wpfs
+
+#redis配置
+redis:
+  host: 127.0.0.1
+  port: 6339
