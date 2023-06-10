@@ -1,0 +1,306 @@
+<template>
+  <div class="card" style="background: #011240; height: 300px">
+    <div class="card-body" style="color: #9fdfdf">
+      <p>机械状态</p>
+      <CRow style="height: 20px;"></CRow>
+      <CRow>
+        <CCol sm="4" lg="4" style="text-align: center">
+          <div id="wheelSpeedChart" style="width: 100%; height: 150px"></div>
+        </CCol>
+        <CCol sm="4" lg="4" style="text-align: center" class="link-right">
+          <div
+            id="generatorSpeedChart"
+            style="width: 100%; height: 150px"
+          ></div>
+        </CCol>
+        <CCol sm="4" lg="4">
+            <CRow>
+                <CCol sm="6" lg="6">
+                    <h5>震动</h5>
+                </CCol>
+            </CRow>
+            <CRow style="height: 20px;" >
+            </CRow>
+            <CRow>
+                <CCol sm="12" lg="12">
+                    <div>机舱X：-0.000g</div>
+                    <div>机舱Y：-0.000g</div>
+                    <div>机舱前后：-0.000g</div>
+                    <div>机舱左右：-0.000g</div>
+                </CCol>
+            </CRow>
+        </CCol>
+      </CRow>
+      <CRow>
+        <CCol sm="4" lg="4" style="text-align: center">
+            <h5>刹车状态：OFF</h5>
+        </CCol>
+        <CCol sm="4" lg="4" style="text-align: center">
+            <h5>偏航状态：OFF</h5>
+        </CCol>
+      </CRow>
+    </div>
+  </div>
+</template>
+      
+<script>
+import * as echarts from "echarts";
+export default {
+  name: "MachineStatus",
+  data() {
+    return {};
+  },
+  props: {
+    fanName: String, //风机名称
+    fanStatus: String, //风机状态
+    alertLevel: String, //警报等级
+  },
+  mounted() {
+    this.drawWheelSpeedChart();
+    this.drawGeneratorSpeedChart();
+  },
+  methods: {
+    ///////////////////////////////////////////////////
+    drawWheelSpeedChart() {
+      var chartDom = document.getElementById("wheelSpeedChart");
+      var myChart = echarts.init(chartDom);
+      var option;
+
+      option = {
+        tooltip: {
+          formatter: "{a} <br/>{b} : {c}%",
+        },
+        title: {
+          text: "全场风速",
+          left: "42%",
+          top: "60%",
+          textStyle: {
+            color: "#9fdfdf",
+            fontSize: 14,
+          },
+        },
+        series: [
+          {
+            name: "Pressure",
+            type: "gauge",
+            min: 0,
+            max: 20,
+            splitNumber: 5,
+            startAngle: 190,
+            endAngle: -10,
+            progress: {
+              show: true,
+              width: 8,
+              roundCap: true,
+              itemStyle: {
+                color: {
+                  type: "linear",
+                  x: 0,
+                  y: 1,
+                  x2: 1,
+                  y2: 1,
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: "#4ed6b3", // 0% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: "#b2df6b", // 100% 处的颜色
+                    },
+                  ],
+                },
+              },
+            },
+            center: ["50%", "50%"],
+            radius: "100%",
+            detail: {
+              valueAnimation: true,
+              formatter: "{value}",
+            },
+            axisLine: {
+              roundCap: true,
+              lineStyle: {
+                width: 8,
+                color: [[1, "#001247"]],
+              },
+            },
+            splitLine: {
+              show: true,
+              length: 5,
+              distance: 5,
+              lineStyle: {
+                width: 1,
+                color: "#fff",
+              },
+            },
+            axisTick: {
+              show: true,
+              splitNumber: 2,
+              length: 3,
+              distance: 5,
+              lineStyle: {
+                width: 1,
+                color: "#fff",
+              },
+            },
+            axisLabel: {
+              show: true,
+              color: "#fff",
+            },
+            pointer: {
+              show: false,
+            },
+            data: [
+              {
+                value: 12.5,
+                name: "m/s",
+                title: {
+                  offsetCenter: [0, 0],
+                  color: "#9fdfdf",
+                  fontSize: 15,
+                },
+                detail: {
+                  offsetCenter: [0, -20],
+                  color: "#9fdfdf",
+                  fontSize: 22,
+                },
+              },
+            ],
+          },
+        ],
+      };
+
+      option && myChart.setOption(option);
+    },
+    drawGeneratorSpeedChart() {
+        var chartDom = document.getElementById("generatorSpeedChart");
+      var myChart = echarts.init(chartDom);
+      var option;
+
+      option = {
+        tooltip: {
+          formatter: "{a} <br/>{b} : {c}%",
+        },
+        title: {
+          text: "全场风速",
+          left: "42%",
+          top: "60%",
+          textStyle: {
+            color: "#9fdfdf",
+            fontSize: 14,
+          },
+        },
+        series: [
+          {
+            name: "Pressure",
+            type: "gauge",
+            min: 0,
+            max: 20,
+            splitNumber: 5,
+            startAngle: 190,
+            endAngle: -10,
+            progress: {
+              show: true,
+              width: 8,
+              roundCap: true,
+              itemStyle: {
+                color: {
+                  type: "linear",
+                  x: 0,
+                  y: 1,
+                  x2: 1,
+                  y2: 1,
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: "#4ed6b3", // 0% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: "#b2df6b", // 100% 处的颜色
+                    },
+                  ],
+                },
+              },
+            },
+            center: ["50%", "50%"],
+            radius: "100%",
+            detail: {
+              valueAnimation: true,
+              formatter: "{value}",
+            },
+            axisLine: {
+              roundCap: true,
+              lineStyle: {
+                width: 8,
+                color: [[1, "#001247"]],
+              },
+            },
+            splitLine: {
+              show: true,
+              length: 5,
+              distance: 5,
+              lineStyle: {
+                width: 1,
+                color: "#fff",
+              },
+            },
+            axisTick: {
+              show: true,
+              splitNumber: 2,
+              length: 3,
+              distance: 5,
+              lineStyle: {
+                width: 1,
+                color: "#fff",
+              },
+            },
+            axisLabel: {
+              show: true,
+              color: "#fff",
+            },
+            pointer: {
+              show: false,
+            },
+            data: [
+              {
+                value: 12.5,
+                name: "m/s",
+                title: {
+                  offsetCenter: [0, 0],
+                  color: "#9fdfdf",
+                  fontSize: 15,
+                },
+                detail: {
+                  offsetCenter: [0, -20],
+                  color: "#9fdfdf",
+                  fontSize: 22,
+                },
+              },
+            ],
+          },
+        ],
+      };
+
+      option && myChart.setOption(option);
+    },
+  },
+};
+</script>
+      
+      <style lang="scss" scoped>
+/*中间的过度的横线*/
+.link-top {
+  width: 50%;
+  height: 1px;
+  border-top: solid #acc0d8 1px;
+}
+
+/*画一条再右边的竖线*/
+.link-right {
+  width: 1px;
+  height: 30%;
+  border-right: solid #2e3a50 1px;
+}
+</style>
