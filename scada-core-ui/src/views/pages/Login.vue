@@ -6,7 +6,7 @@
           <CCard class="p-4">
             <CCardBody>
               <CForm>
-                <h1>风功率预测系统</h1>
+                <h1>风电场中央中控系统</h1>
                 <CInput placeholder="用户账号" v-model="account">
                   <template #prepend-content>
                     <CIcon name="cil-user" />

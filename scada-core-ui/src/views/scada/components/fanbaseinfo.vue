@@ -8,7 +8,7 @@
           <img src="../../../../public/fan/正常风机x2.png" />
           <div class="h1 text">{{ fanName }}</div>
         </CCol>
-        <CCol sm="8" lg="8" class="h5 py-3 text-center">
+        <CCol sm="8" lg="8" class="h5 py-3 text-center" >
           <div class="text">
             <img src="../../../../public/icon/风机.png" /> 风机状态：{{
               fanStatus
@@ -38,19 +38,4 @@ export default {
   },
 };
 </script>
-    
-    <style lang="scss" scoped>
-/*中间的过度的横线*/
-.link-top {
-  width: 50%;
-  height: 1px;
-  border-top: solid #acc0d8 1px;
-}
-
-/*画一条再右边的竖线*/
-.link-right {
-  width: 50%;
-  height: 100%;
-  border-right: solid #2e3a50 1px;
-}
-</style>
+ 

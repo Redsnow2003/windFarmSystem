@@ -77,3 +77,38 @@
   background-color: #f9fafc;
 }
 
+  /*中间的过度的横线*/
+  .link-top {
+    width: 50%;
+    height: 1px;
+    border-top: solid #465a70 1px;
+  }
+  
+  /*画一条再右边的竖线*/
+  .link-right {
+    width: 1px;
+    height: 80%;
+    border-right: solid #465a70 1px;
+  }
+  /*画一条在下面的线*/
+  .link-bottom {
+    width: 100%;
+    border-bottom: solid #465a70 1px;
+  }
+  /*画一条在左边的线*/
+  .link-left {
+    height: 80%;
+    border-left: solid #465a70 1px;
+  }
+// 画一个圆
+  .circle {
+    position: absolute;
+    top: 50%;
+    margin-left: -5px;
+    margin-top: -5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background: #5ae82b;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
+  }

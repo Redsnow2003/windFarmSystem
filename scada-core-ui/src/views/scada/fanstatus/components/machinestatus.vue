@@ -1,8 +1,17 @@
 <template>
   <div class="card" style="background: #011240; height: 300px">
     <div class="card-body" style="color: #9fdfdf">
-      <p>机械状态</p>
-      <CRow style="height: 20px;"></CRow>
+        
+      <CRow style="height: 20px;">
+        <CCol sm="1" lg="1">
+            <div class="circle"></div>
+        </CCol>
+        <CCol sm="3" lg="3">
+            <div>机械状态</div>
+        </CCol>
+    </CRow>
+    <CRow style="height: 20px;">
+    </CRow>
       <CRow>
         <CCol sm="4" lg="4" style="text-align: center">
           <div id="wheelSpeedChart" style="width: 100%; height: 150px"></div>
@@ -288,19 +297,3 @@ export default {
   },
 };
 </script>
-      
-      <style lang="scss" scoped>
-/*中间的过度的横线*/
-.link-top {
-  width: 50%;
-  height: 1px;
-  border-top: solid #acc0d8 1px;
-}
-
-/*画一条再右边的竖线*/
-.link-right {
-  width: 1px;
-  height: 30%;
-  border-right: solid #2e3a50 1px;
-}
-</style>
