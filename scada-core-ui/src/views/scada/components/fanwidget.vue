@@ -1,5 +1,5 @@
 <template>
-  <div class="card title-small" >
+  <div class="card rectangle" >
     <tr>
         <td>
             <div class="small" style="color: aqua;height: 5px;margin-top: 5px;margin-left: 5px;">正常风机</div>
@@ -44,6 +44,17 @@ export default {
   height: 140px;
   background-color: #011240;
   .text {
+    font-size: 16px;
+    color: rgb(241, 239, 239);
+  }
+}
+.rectangle{
+    width: 150px;
+    height: 140px;
+    border-radius: 7px;
+    position: relative;
+    background-image: linear-gradient(bottom, rgb(16, 40, 78) 0%, rgb(15, 73, 106) 90%); 
+    .text {
     font-size: 16px;
     color: rgb(241, 239, 239);
   }

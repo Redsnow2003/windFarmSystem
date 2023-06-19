@@ -19,7 +19,7 @@
     },
     props: {
       info: String, //信息
-      value: Number, //值
+      value: String, //值
     },
     mounted() {
      

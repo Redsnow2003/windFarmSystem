@@ -1,68 +1,51 @@
 <template>
-    <div>
-      <CRow>
-        <CCol sm="3" lg="3">
-          <FanInfo fanName="A01" fanStatus="正常" alertLevel="正常" height="160px" />
-        </CCol>
-        <CCol sm="9" lg="9">
-          <CRow>
-            <CCol sm="3" lg="3">
-              <LgButton name="功率/风速" width="300px" height="80px" />
-            </CCol>
-            <CCol sm="3" lg="3">
-              <LgButton name="压力" width="300px" height="80px" />
-            </CCol>
-            <CCol sm="3" lg="3">
-              <LgButton name="震动" width="300px" height="80px" />
-            </CCol>
-            <CCol sm="3" lg="3">
-              <LgButton name="温度1" width="300px" height="80px" />
-            </CCol>
-          </CRow>
-          <CRow>
-            <CCol sm="3" lg="3">
-              <LgButton name="转速" width="300px" height="80px" />
-            </CCol>
-            <CCol sm="3" lg="3">
-              <LgButton name="角度" width="300px" height="80px" />
-            </CCol>
-            <CCol sm="3" lg="3">
-              <LgButton name="电压/电流" width="300px" height="80px" />
-            </CCol>
-            <CCol sm="3" lg="3">
-              <LgButton name="温度2" width="300px" height="80px" />
-            </CCol>
-          </CRow>
-        </CCol>
-      </CRow>
-      <CRow>
-        <CCol sm="12" lg="12">
-        <div class="card" style="background: #011240; height: 690px">
-        <div id="lineChart" style="width: 100%; height: 680px;"></div>
-      </div>
-    </CCol>
-      </CRow>
-    </div>
-  </template>
-  
-  
-  <script>
-  // 引入echarts
-import LgButton from "../components/largebutton";
-import FanInfo from "./faninfo"; //引入组件
+  <div class="card" style="background: #011240; height: 550px">
+    <CRow>
+      <CCol sm="12" lg="6">
+        <div class="card-body" style="color: #9fdfdf">
+          <div>功率曲线</div>
+        </div>
+      </CCol>
+      <CCol sm="12" lg="6" align="right">
+        <el-date-picker
+          value-format="yyyy-MM-dd"
+          type="daterange"
+          unlink-panels
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          :default-value="[new Date(), new Date()]"
+          :picker-options="pickerOptions"
+        >
+        </el-date-picker>
+      </CCol>
+    </CRow>
+    <CRow>
+      <CCol>
+        <div id="powerLine" style="width: 100%; height: 500px"></div>
+      </CCol>
+    </CRow>
+  </div>
+</template>
+              
+<script>
 import * as echarts from "echarts";
-  export default {
-    name: "WindFarmMap",
-    components: {
-      LgButton,
-      FanInfo
-  }, //注册组件
+export default {
+  name: "PowerChart",
+  data() {
+    return {};
+  },
+  props: {
+    fanName: String, //风机名称
+    fanStatus: String, //风机状态
+    alertLevel: String, //警报等级
+  },
   mounted() {
     this.drawSvgMap();
   },
   methods: {
     drawSvgMap() {
-      var chartDom = document.getElementById("lineChart");
+      var chartDom = document.getElementById("powerLine");
       var myChart = echarts.init(chartDom);
       var option;
 
@@ -146,5 +129,6 @@ import * as echarts from "echarts";
       option && myChart.setOption(option);
     },
   },
-  };
-  </script>
+};
+</script>
+           
