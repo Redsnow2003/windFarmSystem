@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { setUserId, setUserName,setFarmId,setToken} from "@/utils/auth"; // get token from cookie
+import { setUserId, setUserName,setToken} from "@/utils/auth"; // get token from cookie
 import { login } from "@/api/user";
 
 export default {
@@ -54,7 +54,6 @@ export default {
           var token = response.token;
           setUserId(userObj.id);
           setUserName(userObj.username);
-          setFarmId(userObj.windFarmId);
           setToken(token);
           this.$store.state.token = token;
           this.$store.state.userName = userObj.name;
@@ -62,7 +61,7 @@ export default {
           if(userObj.role==0||userObj.role==1)
             this.$router.push({ path: this.redirect || "/" });
           else
-            this.$router.push({ path: this.redirect || "/windfarm/windfarmmap" });
+            this.$router.push({ path: this.redirect || "/windfarm/windfarmview" });
         })
         .catch(error => {
           console.log(error);

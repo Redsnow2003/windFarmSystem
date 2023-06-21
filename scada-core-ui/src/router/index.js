@@ -56,7 +56,7 @@ var router = new Router({
           children: [
             {
               path: '/windfarm/WindFarmview',
-              name: '列表',
+              name: '总览',
               component: WindFarmOverview
             },
             {
@@ -66,7 +66,7 @@ var router = new Router({
             },
             {
               path: '/windfarm/WindFarmList',
-              name: '总览',
+              name: '列表',
               component: WindFarmList
             },
             {

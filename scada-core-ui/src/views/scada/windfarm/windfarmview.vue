@@ -8,167 +8,52 @@
               color="light"
               :variant="checkStatus.all"
               @click="changeStatus('all')"
-              >全部风机(12)</CButton
+              >全部风机({{ fanList.length }})</CButton
             >
             <CButton
               color="success"
               :variant="checkStatus.normal"
               @click="changeStatus('normal')"
-              >正常风机(8)</CButton
+              >正常风机({{ fanList.filter(item => item.status === 0).length }})</CButton
             >
             <CButton
               color="primary"
               :variant="checkStatus.initiating"
               @click="changeStatus('initiating')"
-              >启动中...(0)</CButton
+              >启动中...({{ fanList.filter(item => item.status === 1).length }})</CButton
             >
             <CButton
               color="secondary"
               :variant="checkStatus.offline"
               @click="changeStatus('offline')"
-              >通讯中断(1)</CButton
+              >通讯中断({{ fanList.filter(item => item.status === 2).length }})</CButton
             >
             <CButton
               color="info"
               :variant="checkStatus.waitWind"
               @click="changeStatus('waitWind')"
-              >待机等风(2)</CButton
+              >待机等风({{ fanList.filter(item => item.status === 3).length }})</CButton
             >
             <CButton
               color="warning"
               :variant="checkStatus.waitMaintain"
               @click="changeStatus('waitMaintain')"
-              >维护停机(0)</CButton
+              >维护停机({{ fanList.filter(item => item.status === 4).length }})</CButton
             >
             <CButton
               color="danger"
               :variant="checkStatus.fault"
               @click="changeStatus('fault')"
-              >故障停机(1)</CButton
+              >故障停机({{ fanList.filter(item => item.status === 5).length }})</CButton
             >
           </CButtonGroup>
         </CCardHeader>
         <CCardBody>
           <el-scrollbar style="height: 100%">
-          <CContainer>
+          <CContainer v-for="(item,index) in fanFliter" :key="index">
             <CRow>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="启动中风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="待风风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="故障风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="维护风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="维护风机"/>
-              </CCol>
-            </CRow>
-            <CRow>
-              <CCol>
-                <FanWidget fanStatus="离线风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-            </CRow>
-            <CRow>
-              <CCol>
-                <FanWidget fanStatus="离线风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-            </CRow>
-            <CRow>
-              <CCol>
-                <FanWidget fanStatus="离线风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-            </CRow>
-            <CRow>
-              <CCol>
-                <FanWidget fanStatus="离线风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-            </CRow>
-            <CRow>
-              <CCol>
-                <FanWidget fanStatus="离线风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
-              </CCol>
-              <CCol>
-                <FanWidget fanStatus="正常风机"/>
+              <CCol  v-for="(fan,index2) in item" :key="index2" lg="2">
+                <FanWidget :fanStatus="fanStatus[fan.status]" :fanName="fan.name" :windSpeed="fan.wind_speed" :power="fan.power"/>
               </CCol>
             </CRow>
           </CContainer>
@@ -220,7 +105,7 @@
                           justify-content: center;
                           align-items: center;
                           height: 110px;
-                        ">120611.3</div>
+                        ">{{ windFarmInfo.total_electric }}</div>
                     </div>
                   </div>
                 </CCol>
@@ -239,7 +124,7 @@
                           height: 180px;
                         "
                       >
-                        5.9
+                        {{ windFarmInfo.day_electric }}
                       </div>
                     </div>
                   </div>
@@ -260,7 +145,7 @@
                           justify-content: center;
                           align-items: center;
                           height: 80px;
-                        ">129.7</div>
+                        ">{{ windFarmInfo.month_electric }}</div>
                         </div>
                       </div>
                     </CCol>
@@ -280,7 +165,7 @@
                           justify-content: center;
                           align-items: center;
                           height: 80px;
-                        ">1355.7</div>
+                        ">{{ windFarmInfo.year_electric }}</div>
                         </div>
                       </div>
                     </CCol>
@@ -300,11 +185,13 @@
 // 引入echarts
 import * as echarts from "echarts";
 import FanWidget from "../components/fanwidget"; //引入组件
+import { getWindFarmInfo } from "@/api/windfarm";
+import { getFanList } from "@/api/fan";
 export default {
-  name: "WindFarmMap",
+  name: "WindFarmView",
   data() {
     return {
-      checkStatus: {
+      checkStatus: { // 风机状态选择按钮
         all: "_",
         normal: "outline",
         initiating: "outline",
@@ -312,6 +199,27 @@ export default {
         waitWind: "outline",
         waitMaintain: "outline",
         fault: "outline",
+      },
+      fanList: {},//风机列表
+      fanFliter: [], //风机状态过滤
+      windFarmInfo: {
+        id: 0, //风场id
+        name: "", //风场名称
+        wind_speed: 0, //风速
+        active_power: 0, //有功功率
+        reactive_power: 0, //无功功率
+        total_electric: 0, // 总发电量
+        day_electric: 0, // 日发电量
+        month_electric: 0, // 月发电量
+        year_electric: 0, // 年发电量
+      }, //风场信息
+      fanStatus: {
+        0: "正常风机",
+        1: "启动中风机",
+        2: "离线风机",
+        3: "待风风机",
+        4: "维护风机",
+        5: "故障风机",
       },
     };
   },
@@ -336,9 +244,53 @@ export default {
       this.checkStatus.waitMaintain = "outline";
       this.checkStatus.fault = "outline";
       this.checkStatus[status] = "_";
+      var fanList = [];
+      this.fanFliter = [];
+      switch (status) {
+        case "all":
+          fanList = this.fanList;
+          break;
+        case "normal":
+          fanList = this.fanList.filter((fan) => fan.status == 0);
+          break;
+        case "initiating":
+          fanList = this.fanList.filter((fan) => fan.status == 1);
+          break;
+        case "offline":
+          fanList = this.fanList.filter((fan) => fan.status == 2);
+          break;
+        case "waitWind":
+          fanList = this.fanList.filter((fan) => fan.status == 3);
+          break;
+        case "waitMaintain":
+          fanList = this.fanList.filter((fan) => fan.status == 4);
+          break;
+        case "fault":
+          fanList = this.fanList.filter((fan) => fan.status == 5);
+          break;
+      }
+      for (var i = 0,len=fanList.length; i < len; i+=6) {
+           this.fanFliter.push(fanList.slice(i, i+6));
+          }
     },
-    fetchData() {},
-
+    fetchData() {
+      this.getWindFarmInfo()
+      this.getFanList()
+    },
+    getWindFarmInfo() {
+      getWindFarmInfo().then((res) => {
+        this.windFarmInfo = res.data;
+      });
+    },
+    getFanList() {
+      getFanList().then((res) => {
+        this.fanList = res.data;
+        this.fanFliter = [];
+        for (var i = 0,len=this.fanList.length; i < len; i+=6) {
+           this.fanFliter.push(this.fanList.slice(i, i+6));
+          }
+      });
+    },
     ///////////////////////////////////////////////////
     drawWindSpeedChart() {
       var chartDom = document.getElementById("windSpeedChart");
@@ -432,7 +384,7 @@ export default {
             },
             data: [
               {
-                value: 12.5,
+                value: this.windFarmInfo.wind_speed,
                 name: "m/s",
                 title: {
                   offsetCenter: [0, 0],
@@ -544,7 +496,7 @@ export default {
             },
             data: [
               {
-                value: 22.5,
+                value: this.windFarmInfo.active_power,
                 name: "MW",
                 title: {
                   offsetCenter: [0, 5],
@@ -655,7 +607,7 @@ export default {
             },
             data: [
               {
-                value: 12.9,
+                value: this.windFarmInfo.reactive_power,
                 name: "Mvar",
                 title: {
                   offsetCenter: [0, 5],
@@ -673,6 +625,21 @@ export default {
         ],
       };
       option && myChart.setOption(option);
+    },
+  },
+  watch: {
+    windFarmInfo: {
+      handler: function () {
+        this.drawWindSpeedChart();
+        this.drawActivePowerChart();
+        this.drawReactivePowerChart();
+      },
+      deep: true,
+    },
+    fanFliter: {
+      handler: function () {
+      },
+      deep: true,
     },
   },
 };

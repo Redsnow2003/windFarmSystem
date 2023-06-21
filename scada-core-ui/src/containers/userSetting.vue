@@ -54,7 +54,7 @@
                     type="text"
                     class="form-control"
                     aria-describedby="basiaddon3"
-                    v-model="newUserAcct"
+                    v-model="newUserName"
                   />
                 </div>
               </el-col>
@@ -69,7 +69,7 @@
                     type="text"
                     class="form-control"
                     aria-describedby="basiaddon3"
-                    v-model="newUserName"
+                    v-model="newName"
                   />
                 </div>
               </el-col>

@@ -5,7 +5,7 @@ import (
 	"main/model"
 	"net/http"
 )
-
+// @Summary 获取风场信息
 func GetWindFarmInfo(c *gin.Context) {
 	// 获取数据库连接
 	db := model.Db
@@ -17,3 +17,13 @@ func GetWindFarmInfo(c *gin.Context) {
 	})
 }
 
+func GetFanList(c *gin.Context) {
+	// 获取数据库连接
+	db := model.Db
+	var fanList []model.Fan
+	db.Model(model.Fan{}).Find(&fanList)
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"data": fanList,
+	})
+}

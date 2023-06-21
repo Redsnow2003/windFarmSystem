@@ -38,6 +38,7 @@ func Init() *gin.Engine {
 
 	r.POST("/login", module.LoginHandler)
 	r.GET("/windFarm/getWindFarmInfo", module.GetWindFarmInfo)
+	r.GET("/fan/getFanList", module.GetFanList)
 
 	r.NoRoute(authMiddleware.MiddlewareFunc(), func(c *gin.Context) {
 		c.JSON(404, gin.H{"code": 404, "message": "Page not found"})

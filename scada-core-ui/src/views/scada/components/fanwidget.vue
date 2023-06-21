@@ -8,15 +8,15 @@
     <div class="card-body" >
       <div style="text-align:center;">
         <img :src="require(`@/../public/fan/${fanStatus}.png`)"/>
-        <div class="text">A01</div>
+        <div class="text">{{ fanName }}</div>
       </div>
     </div>
     <tr>
         <td>
-            <div class="small" style="color: aqua;width:100px;">5.2m/s</div>
+            <div class="small" style="color: aqua;width:100px;">{{ windSpeed }}m/s</div>
         </td>
         <td>
-            <div class="small" style="color: aqua;width:50px;">100.5kw</div>
+            <div class="small" style="color: aqua;width:50px;">{{ power }}kw</div>
         </td>
     </tr>
 

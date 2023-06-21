@@ -4,7 +4,7 @@ import request from '@/utils/request'
  */
 export function getWindFarmInfo() {
   return request({
-    url: '/api/windFarm/getWindFarmList',
+    url: '/api/windFarm/getWindFarmInfo',
     method: 'get'
   })
 }
