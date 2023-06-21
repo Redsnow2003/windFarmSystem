@@ -22,7 +22,7 @@ export function getCookie(key) {
 }
 
 const UserId="userId";
-const Account="account";
+const UserName="username";
 export function getUserId() {
     return Cookies.get(UserId)
 }
@@ -32,14 +32,14 @@ export function setUserId(userId) {
 export function removeUserId() {
     return Cookies.remove(UserId)
 }
-export function getAccount() {
-    return Cookies.get(Account)
+export function getUserName() {
+    return Cookies.get(UserName)
 }
-export function setAccount(account) {
-    return Cookies.set(Account, account)
+export function setUserName(username) {
+    return Cookies.set(UserName, username)
 }
-export function removeAccount() {
-    return Cookies.remove(Account)
+export function removeUserName() {
+    return Cookies.remove(UserName)
 }
 
 const TokenKey = 'user_token'

@@ -139,7 +139,7 @@
 // 引入echarts
 import * as echarts from "echarts";
 import axios from "axios";
-import { getFanInfosByWindFarmId } from "@/api/faninfo";
+import { getFanInfosByWindFarmId } from "@/api/fan";
 import { getFarmId } from "@/utils/auth";
 export default {
   name: "WindFarmMap",

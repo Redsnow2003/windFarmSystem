@@ -8,92 +8,177 @@
               color="light"
               :variant="checkStatus.all"
               @click="changeStatus('all')"
-              >全部风机</CButton
+              >全部风机(12)</CButton
             >
             <CButton
               color="success"
               :variant="checkStatus.normal"
               @click="changeStatus('normal')"
-              >正常风机</CButton
+              >正常风机(8)</CButton
             >
             <CButton
               color="primary"
               :variant="checkStatus.initiating"
               @click="changeStatus('initiating')"
-              >启动中...</CButton
+              >启动中...(0)</CButton
             >
             <CButton
               color="secondary"
               :variant="checkStatus.offline"
               @click="changeStatus('offline')"
-              >通讯中断</CButton
+              >通讯中断(1)</CButton
             >
             <CButton
               color="info"
               :variant="checkStatus.waitWind"
               @click="changeStatus('waitWind')"
-              >待机等风</CButton
+              >待机等风(2)</CButton
             >
             <CButton
               color="warning"
               :variant="checkStatus.waitMaintain"
               @click="changeStatus('waitMaintain')"
-              >维护停机</CButton
+              >维护停机(0)</CButton
             >
             <CButton
               color="danger"
               :variant="checkStatus.fault"
               @click="changeStatus('fault')"
-              >故障停机</CButton
+              >故障停机(1)</CButton
             >
           </CButtonGroup>
         </CCardHeader>
         <CCardBody>
+          <el-scrollbar style="height: 100%">
           <CContainer>
             <CRow>
               <CCol>
-                <FanWidget />
+                <FanWidget fanStatus="正常风机"/>
               </CCol>
               <CCol>
-                <FanWidget />
+                <FanWidget fanStatus="启动中风机"/>
               </CCol>
               <CCol>
-                <FanWidget />
+                <FanWidget fanStatus="待风风机"/>
               </CCol>
               <CCol>
-                <FanWidget />
+                <FanWidget fanStatus="故障风机"/>
               </CCol>
               <CCol>
-                <FanWidget />
+                <FanWidget fanStatus="维护风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="维护风机"/>
               </CCol>
             </CRow>
             <CRow>
               <CCol>
-                <FanWidget />
+                <FanWidget fanStatus="离线风机"/>
               </CCol>
               <CCol>
-                <FanWidget />
+                <FanWidget fanStatus="正常风机"/>
               </CCol>
               <CCol>
-                <FanWidget />
+                <FanWidget fanStatus="正常风机"/>
               </CCol>
               <CCol>
-                <FanWidget />
+                <FanWidget fanStatus="正常风机"/>
               </CCol>
               <CCol>
-                <FanWidget />
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+            </CRow>
+            <CRow>
+              <CCol>
+                <FanWidget fanStatus="离线风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+            </CRow>
+            <CRow>
+              <CCol>
+                <FanWidget fanStatus="离线风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+            </CRow>
+            <CRow>
+              <CCol>
+                <FanWidget fanStatus="离线风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+            </CRow>
+            <CRow>
+              <CCol>
+                <FanWidget fanStatus="离线风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
+              </CCol>
+              <CCol>
+                <FanWidget fanStatus="正常风机"/>
               </CCol>
             </CRow>
           </CContainer>
+        </el-scrollbar>
         </CCardBody>
       </CCard>
     </CCol>
     <CCol sm="4" lg="4">
       <CCard>
         <div style="width: 100%; height: 88vh">
-          <CCardHeader>
-            <div style="font-size: 24px; color: #4f87d1">风场数据</div>
-          </CCardHeader>
           <CCardBody>
             <div style="align-items: center">
               <CRow>
@@ -121,7 +206,7 @@
               </CRow>
               <CRow>
                 <CCol sm="12" lg="12">
-                  <div class="card" style="background: #031649; height: 120px">
+                  <div class="card" style="background: #031649; height: 170px">
                     <div class="card-body" style="color: #9fdfdf">
                       <div class="small">
                         <CIcon
@@ -130,14 +215,19 @@
                         />
                         总发电量（万kwh）
                       </div>
-                      <div class="h1 py-3 text-center">120611.3</div>
+                      <div class="h1 py-3 text-center" style="
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          height: 110px;
+                        ">120611.3</div>
                     </div>
                   </div>
                 </CCol>
               </CRow>
               <CRow>
                 <CCol sm="6" lg="6">
-                  <div class="card" style="background: #031649; height: 180px">
+                  <div class="card" style="background: #031649; height: 220px">
                     <div class="card-body" style="color: #9fdfdf">
                       <div class="small">日发电量（万kwh）</div>
                       <div
@@ -146,7 +236,7 @@
                           display: flex;
                           justify-content: center;
                           align-items: center;
-                          height: 130px;
+                          height: 180px;
                         "
                       >
                         5.9
@@ -159,13 +249,18 @@
                     <CCol>
                       <div
                         class="card"
-                        style="background: #031649; height: 78px"
+                        style="background: #031649; height: 100px"
                       >
                         <div class="card-body" style="color: #9fdfdf">
                           <div class="small" style="height: 5px">
                             月发电量（万kwh）
                           </div>
-                          <div class="h4 py-3 text-center">129.7</div>
+                          <div class="h4 py-3 text-center" style="
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          height: 80px;
+                        ">129.7</div>
                         </div>
                       </div>
                     </CCol>
@@ -174,13 +269,18 @@
                     <CCol>
                       <div
                         class="card"
-                        style="background: #031649; height: 78px"
+                        style="background: #031649; height: 100px"
                       >
                         <div class="card-body" style="color: #9fdfdf">
                           <div class="small" style="height: 5px">
                             年发电量（万kwh）
                           </div>
-                          <div class="h4 py-3 text-center">1355.7</div>
+                          <div class="h4 py-3 text-center" style="
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          height: 80px;
+                        ">1355.7</div>
                         </div>
                       </div>
                     </CCol>
@@ -577,3 +677,10 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.el-scrollbar__wrap {
+  overflow-x: hidden;
+  width: 103%;
+}
+</style>
+  

@@ -7,7 +7,7 @@
             <CCardBody>
               <CForm>
                 <h1>风电场中央中控系统</h1>
-                <CInput placeholder="用户账号" v-model="account">
+                <CInput placeholder="用户账号" v-model="username">
                   <template #prepend-content>
                     <CIcon name="cil-user" />
                   </template>
@@ -32,28 +32,28 @@
 </template>
 
 <script>
-import { setUserId, setAccount,setFarmId,setToken} from "@/utils/auth"; // get token from cookie
+import { setUserId, setUserName,setFarmId,setToken} from "@/utils/auth"; // get token from cookie
 import { login } from "@/api/user";
 
 export default {
   name: "Login",
   data() {
     return {
-      account: "",
+      username: "",
       pwd: ""
     };
   },
   methods: {
     login() {
       login({
-        Account: this.account,
+        UserName: this.username,
         Password: this.pwd
       })
         .then(response => {
           var userObj = response.data;
           var token = response.token;
           setUserId(userObj.id);
-          setAccount(userObj.account);
+          setUserName(userObj.username);
           setFarmId(userObj.windFarmId);
           setToken(token);
           this.$store.state.token = token;

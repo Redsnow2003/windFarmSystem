@@ -37,17 +37,7 @@ func Init() *gin.Engine {
 	authMiddleware := middleware.AuthMiddleWare()
 
 	r.POST("/login", module.LoginHandler)
-	r.GET("/windFarmInfo/getWindFarmInfoList", module.GetWindFarmInfoHandler)
-	r.GET("/windFarmInfo/getUserWindFarmInfoList", module.GetUserWindFarmInfoList)
-	r.GET("/windFarmInfo/getWindFarmInfo", module.GetWindFarmInfo)
-
-	//
-	r.GET("/fanInfo/getFanInfoNum", module.GetFanCount)
-	r.GET("/fanInfo/getFanInfosByWindFarmId", module.GetFanInfosByWindFarmId)
-	r.GET("/powerInfo/getTodayPowerInfo", module.GetTodayPowerInfo)
-	r.GET("/reaWindInfo/getTodayWindSpeed",module.GetTodayWindSpeedInfo)
-	r.GET("/collWireInfo/getCollWireCountInfo",module.GetCollWireCountInfo)
-	r.GET("/windTowerInfo/getTowerCountInfo",module.GetTowerCountInfo)
+	r.GET("/windFarm/getWindFarmInfo", module.GetWindFarmInfo)
 
 	r.NoRoute(authMiddleware.MiddlewareFunc(), func(c *gin.Context) {
 		c.JSON(404, gin.H{"code": 404, "message": "Page not found"})

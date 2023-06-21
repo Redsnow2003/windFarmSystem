@@ -199,7 +199,6 @@ import {
   checkPassword,
   changePassword,
 } from "@/api/user";
-import { getFarmId, getUserId } from "@/utils/auth";
 import { Message } from "element-ui";
 export default {
   name: "userSetting",
@@ -209,8 +208,8 @@ export default {
       userId: null,
       userInfoArry: [],
       showAdd: false,
-      newUserAcct: "",
       newUserName: "",
+      newName: "",
       loading: false,
       oldPwd: "",
       newPwd1: "",
@@ -218,9 +217,9 @@ export default {
     };
   },
   created() {
-    this.setFarmId(getFarmId());
-    this.userId = getUserId();
-    this.fetchData();
+    //this.setFarmId(getFarmId());
+    //this.userId = getUserId();
+   // this.fetchData();
   },
   methods: {
     changePwd() {
@@ -279,8 +278,8 @@ export default {
     },
     addUser() {
       var temparr = {};
-      temparr.acct = this.newUserAcct;
-      temparr.userName = this.newUserName;
+      temparr.username = this.newUserName;
+      temparr.name = this.newName;
       if (this.$store.state.role == 0) temparr.role = 1;
       else temparr.role = 3;
       temparr.password = "111111";
@@ -289,20 +288,19 @@ export default {
       temparr.pop = false;
       this.loading = true;
       addNewUser({
-        account: temparr.acct,
-        name: temparr.userName,
+        username: temparr.username,
+        name: temparr.name,
         role: temparr.role,
         password: temparr.password,
-        userPic: "1.jpg",
-        windFarmId: this.farmId,
+        img: "1.jpg",
       })
         .then((response) => {
           if (response.data != null) {
             temparr.id = response.data.id;
             this.userInfoArry.push(temparr);
             this.showAdd = false;
-            this.newUserAcct = "";
             this.newUserName = "";
+            this.newName = "";
             this.loading = false;
           }
         })
@@ -336,11 +334,11 @@ export default {
             response.data.forEach((element) => {
               var temparr = {};
               temparr.id = element.id;
-              temparr.acct = element.account;
-              temparr.userName = element.name;
+              temparr.username = element.username;
+              temparr.name = element.name;
               temparr.role = element.role;
               temparr.password = element.password;
-              temparr.userPic = "img/avatars/" + element.userPic;
+              temparr.img = "img/avatars/" + element.img;
               temparr.show = true;
               temparr.pop = false;
               this.userInfoArry.push(temparr);

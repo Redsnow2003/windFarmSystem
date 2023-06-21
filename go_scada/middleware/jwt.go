@@ -15,7 +15,7 @@ import (
 
 // 用户信息
 type JwtUser struct {
-	Account string
+	UserName string
 }
 
 // 身份验证的 key 值
@@ -23,7 +23,7 @@ var identityKey = "id"
 
 // 登录信息
 type login struct {
-    Account 	string `form:"account" json:"account" binding:"required"`
+    UserName 	string `form:"username" json:"username" binding:"required"`
 	Password 	string `form:"password" json:"password" binding:"required"`
 }
 
@@ -51,7 +51,7 @@ func AuthMiddleWare() *jwt.GinJWTMiddleware {
 		PayloadFunc: func(data interface{}) jwt.MapClaims {
 			if v, ok := data.(JwtUser); ok {
 				return jwt.MapClaims{
-					identityKey: v.Account,
+					identityKey: v.UserName,
 				}
 			}
 			return jwt.MapClaims{}
@@ -63,7 +63,7 @@ func AuthMiddleWare() *jwt.GinJWTMiddleware {
 				return nil
 			}
 			return JwtUser{
-				Account: claims[identityKey].(string),
+				UserName: claims[identityKey].(string),
 			}
 		},
 		// 根据登录信息对用户进行身份验证的回调函数
@@ -73,13 +73,13 @@ func AuthMiddleWare() *jwt.GinJWTMiddleware {
 				logger.Errorf("登录信息错误：%v",err)
 				return "", jwt.ErrMissingLoginValues
 			}
-			account := loginVars.Account
+			username := loginVars.UserName
 			password := loginVars.Password
-			res := user.SelelctByAccount(account)
+			res := user.SelelctByUserName(username)
 			userInfo = res
 			if res != nil && (password) == (res.Password) {		
 				return JwtUser{
-					Account: account,
+					UserName: username,
 				},nil
 			}
 			return nil,jwt.ErrFailedAuthentication
@@ -107,11 +107,10 @@ func AuthMiddleWare() *jwt.GinJWTMiddleware {
 				"data": gin.H {
 					"message": 		"success",
 					"id":			userInfo.Id,
-					"account":		userInfo.Account,
-					"windFarmId": 	userInfo.WindFarmId,
+					"username":		userInfo.UserName,
+					"name": 		userInfo.Name,
 					"role": 		userInfo.Role,
-					"Name": 		userInfo.Name,	
-					"userPic":		userInfo.UserPic,
+					"img":			userInfo.Img,
 				},
 			})
 		},
@@ -139,7 +138,7 @@ func GetCurrentUser(c* gin.Context) *model.User{
 	// 从token中解析出用户信息
 	claims := jwt.ExtractClaimsFromToken(token)
 	// 从用户信息中解析出用户账号
-	account := claims["id"].(string)
+	username := claims["id"].(string)
 	// 根据用户账号查询用户信息
-	return user.SelelctByAccount(account)
+	return user.SelelctByUserName(username)
 }

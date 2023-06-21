@@ -41,15 +41,6 @@
   position: relative;
 }
 
-.el-scrollbar
-{
-  background: rgba(mix(rgba(255, 255, 255, .1), $bg-elevation-0), 1) !important;
-}
-.el-scrollbar__thumb {
-
-  background: rgba(mix(rgba(255, 255, 255, .1), $bg-elevation-0), 1) !important;
-}
-
 .el-date-picker {
   background: rgba(mix(rgba(255, 255, 255, .1), $bg-elevation-0), 1) !important;
   border-radius: 0.4rem;

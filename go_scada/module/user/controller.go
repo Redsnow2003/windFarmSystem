@@ -8,12 +8,12 @@ import (
 )
 
 // 根据用户名查询用户
-func SelelctByAccount(account string) *model.User {
+func SelelctByUserName(username string) *model.User {
 	db := model.Db
 	u := model.User{}
-	res := db.Where("account = ?", account).First(&u)
+	res := db.Where("username = ?", username).First(&u)
 	if errors.Is(res.Error, gorm.ErrRecordNotFound) {
-		logger.Debugf("Select by account err:" + "未查找到相关数据")
+		logger.Debugf("Select by username err:" + "未查找到相关数据")
 		return nil
 	}
 	return &u

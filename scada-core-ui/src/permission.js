@@ -1,5 +1,5 @@
 import router from './router'
-import { getUserId,getAccount } from '@/utils/auth' // get token from cooki
+import { getUserId,getUserName } from '@/utils/auth' // get token from cooki
 
 const whiteList = ['/login'] // no redirect whitelist
 
@@ -13,9 +13,9 @@ router.beforeEach((to, from, next) => {
 
   // determine whether the user has logged in
   const userId = getUserId()
-  const account = getAccount()
+  const username = getUserName()
  
-  if (userId&&account) {
+  if (userId&&username) {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })

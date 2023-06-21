@@ -2,12 +2,12 @@
   <div class="card rectangle" >
     <tr>
         <td>
-            <div class="small" style="color: aqua;height: 5px;margin-top: 5px;margin-left: 5px;">正常风机</div>
+            <div class="small" style="color: aqua;height: 5px;margin-top: 5px;margin-left: 5px;">{{fanStatus}}</div>
         </td>
     </tr>
     <div class="card-body" >
       <div style="text-align:center;">
-        <img src="../../../../public/fan/正常风机.png"/>
+        <img :src="require(`@/../public/fan/${fanStatus}.png`)"/>
         <div class="text">A01</div>
       </div>
     </div>
@@ -39,15 +39,6 @@ export default {
 };
 </script>
   <style lang="scss" scoped>
-.title-small {
-  width: 150px;
-  height: 140px;
-  background-color: #011240;
-  .text {
-    font-size: 16px;
-    color: rgb(241, 239, 239);
-  }
-}
 .rectangle{
     width: 150px;
     height: 140px;
