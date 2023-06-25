@@ -14,37 +14,37 @@
               color="success"
               :variant="checkStatus.normal"
               @click="changeStatus('normal')"
-              >正常风机({{ fanList.filter(item => item.status === 0).length }})</CButton
+              >正常风机({{ fanCount[0] }})</CButton
             >
             <CButton
               color="primary"
               :variant="checkStatus.initiating"
               @click="changeStatus('initiating')"
-              >启动中...({{ fanList.filter(item => item.status === 1).length }})</CButton
+              >启动中...({{ fanCount[1] }})</CButton
             >
             <CButton
               color="secondary"
               :variant="checkStatus.offline"
               @click="changeStatus('offline')"
-              >通讯中断({{ fanList.filter(item => item.status === 2).length }})</CButton
+              >通讯中断({{ fanCount[2] }})</CButton
             >
             <CButton
               color="info"
               :variant="checkStatus.waitWind"
               @click="changeStatus('waitWind')"
-              >待机等风({{ fanList.filter(item => item.status === 3).length }})</CButton
+              >待机等风({{ fanCount[3] }})</CButton
             >
             <CButton
               color="warning"
               :variant="checkStatus.waitMaintain"
               @click="changeStatus('waitMaintain')"
-              >维护停机({{ fanList.filter(item => item.status === 4).length }})</CButton
+              >维护停机({{ fanCount[4] }})</CButton
             >
             <CButton
               color="danger"
               :variant="checkStatus.fault"
               @click="changeStatus('fault')"
-              >故障停机({{ fanList.filter(item => item.status === 5).length }})</CButton
+              >故障停机({{ fanCount[5] }})</CButton
             >
           </CButtonGroup>
         </CCardHeader>
@@ -201,6 +201,7 @@ export default {
         fault: "outline",
       },
       fanList: {},//风机列表
+      fanCount:[0,0,0,0,0,0],//风机数量
       fanFliter: [], //风机状态过滤
       windFarmInfo: {
         id: 0, //风场id
@@ -229,9 +230,11 @@ export default {
   },
 
   mounted() {
-    this.drawWindSpeedChart();
-    this.drawActivePowerChart();
-    this.drawReactivePowerChart();
+    this.$nextTick(() => {
+      this.drawWindSpeedChart();
+      this.drawActivePowerChart();
+      this.drawReactivePowerChart();
+    });
   },
   methods: {
     //响应选择风机状态按钮消息
@@ -289,11 +292,15 @@ export default {
         for (var i = 0,len=this.fanList.length; i < len; i+=6) {
            this.fanFliter.push(this.fanList.slice(i, i+6));
           }
+        for(i=0;i<6;i++) {
+          this.fanCount[i] = this.fanList.filter((fan) => fan.status == i).length
+        }
       });
     },
     ///////////////////////////////////////////////////
     drawWindSpeedChart() {
       var chartDom = document.getElementById("windSpeedChart");
+      if(chartDom == null) return
       var myChart = echarts.init(chartDom);
       var option;
 
@@ -407,6 +414,7 @@ export default {
     ///////////////////////////////////////////////////
     drawActivePowerChart() {
       var chartDom = document.getElementById("powerActiveChart");
+      if(chartDom == null) return
       var myChart = echarts.init(chartDom);
       var option;
       option = {
@@ -518,6 +526,7 @@ export default {
     ///////////////////////////////////////////////////
     drawReactivePowerChart() {
       var chartDom = document.getElementById("powerReactiveChart");
+      if(chartDom == null) return
       var myChart = echarts.init(chartDom);
       var option;
       option = {

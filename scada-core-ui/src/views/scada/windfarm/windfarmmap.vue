@@ -8,43 +8,43 @@
               color="light"
               :variant="checkStatus.all"
               @click="changeStatus('all')"
-              >全部风机</CButton
+              >全部风机({{ fanList.length }})</CButton
             >
             <CButton
               color="success"
               :variant="checkStatus.normal"
               @click="changeStatus('normal')"
-              >正常风机</CButton
+              >正常风机({{ fanCount[0] }})</CButton
             >
             <CButton
               color="primary"
               :variant="checkStatus.initiating"
               @click="changeStatus('initiating')"
-              >启动中...</CButton
+              >启动中...({{ fanCount[1] }})</CButton
             >
             <CButton
               color="secondary"
               :variant="checkStatus.offline"
               @click="changeStatus('offline')"
-              >通讯中断</CButton
+              >通讯中断({{ fanCount[2] }})</CButton
             >
             <CButton
               color="info"
               :variant="checkStatus.waitWind"
               @click="changeStatus('waitWind')"
-              >待机等风</CButton
+              >待机等风({{ fanCount[3] }})</CButton
             >
             <CButton
               color="warning"
               :variant="checkStatus.waitMaintain"
               @click="changeStatus('waitMaintain')"
-              >维护停机</CButton
+              >维护停机({{ fanCount[4] }})</CButton
             >
             <CButton
               color="danger"
               :variant="checkStatus.fault"
               @click="changeStatus('fault')"
-              >故障停机</CButton
+              >故障停机({{ fanCount[5] }})</CButton
             >
           </CButtonGroup>
         </CCardHeader>
@@ -56,9 +56,6 @@
     <CCol sm="4" lg="4">
       <CCard>
         <div style="width: 100%; height: 88vh">
-          <CCardHeader>
-            <div style="font-size: 24px; color: #4f87d1">风场数据</div>
-          </CCardHeader>
           <CCardBody>
             <div style="align-items: center">
               <CRow>
@@ -86,40 +83,81 @@
               </CRow>
               <CRow>
                 <CCol sm="12" lg="12">
-                  <div class="card" style="background: #011240;height: 120px;">
-                    <div class="card-body" style="color: #9fdfdf;">
-                      <div class="small"><CIcon src="../android-icon-36x36.png" style="width: 15px;height: 15px;"/>  总发电量（万kwh）</div>
-                      <div class="h1 py-3 text-center">120611.3</div>
+                  <div class="card" style="background: #031649; height: 170px">
+                    <div class="card-body" style="color: #9fdfdf">
+                      <div class="small">
+                        <CIcon
+                          src="../android-icon-36x36.png"
+                          style="width: 15px; height: 15px"
+                        />
+                        总发电量（万kwh）
+                      </div>
+                      <div class="h1 py-3 text-center" style="
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          height: 110px;
+                        ">{{ windFarmInfo.total_electric }}</div>
                     </div>
                   </div>
                 </CCol>
               </CRow>
               <CRow>
                 <CCol sm="6" lg="6">
-                  <div class="card" style="background: #011240;height: 180px;">
-                    <div class="card-body" style="color: #9fdfdf;">
+                  <div class="card" style="background: #031649; height: 220px">
+                    <div class="card-body" style="color: #9fdfdf">
                       <div class="small">日发电量（万kwh）</div>
-                      <div class="h1 py-3" style="display:flex;justify-content: center; align-items:center;height: 130px;">5.9</div>
+                      <div
+                        class="h1 py-3"
+                        style="
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          height: 180px;
+                        "
+                      >
+                        {{ windFarmInfo.day_electric }}
+                      </div>
                     </div>
                   </div>
                 </CCol>
                 <CCol sm="6" lg="6">
                   <CRow>
                     <CCol>
-                      <div class="card" style="background: #011240;height: 78px;">
-                        <div class="card-body" style="color: #9fdfdf;">
-                          <div class="small" style="height: 5px;">月发电量（万kwh）</div>
-                          <div class="h4 py-3 text-center">129.7</div>
+                      <div
+                        class="card"
+                        style="background: #031649; height: 100px"
+                      >
+                        <div class="card-body" style="color: #9fdfdf">
+                          <div class="small" style="height: 5px">
+                            月发电量（万kwh）
+                          </div>
+                          <div class="h4 py-3 text-center" style="
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          height: 80px;
+                        ">{{ windFarmInfo.month_electric }}</div>
                         </div>
                       </div>
                     </CCol>
                   </CRow>
                   <CRow>
                     <CCol>
-                      <div class="card" style="background: #011240;height: 78px;">
-                        <div class="card-body" style="color: #9fdfdf;">
-                          <div class="small" style="height: 5px;">年发电量（万kwh）</div>
-                          <div class="h4 py-3 text-center">1355.7</div>
+                      <div
+                        class="card"
+                        style="background: #031649; height: 100px"
+                      >
+                        <div class="card-body" style="color: #9fdfdf">
+                          <div class="small" style="height: 5px">
+                            年发电量（万kwh）
+                          </div>
+                          <div class="h4 py-3 text-center" style="
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          height: 80px;
+                        ">{{ windFarmInfo.year_electric }}</div>
                         </div>
                       </div>
                     </CCol>
@@ -139,21 +177,13 @@
 // 引入echarts
 import * as echarts from "echarts";
 import axios from "axios";
-import { getFanInfosByWindFarmId } from "@/api/fan";
-import { getFarmId } from "@/utils/auth";
+import { getWindFarmInfo } from "@/api/windfarm";
+import { getFanList } from "@/api/fan";
 export default {
   name: "WindFarmMap",
   data() {
     return {
-      fanData: [], //风机数据
-      fanNormalCount: 0, //正常风机数量
-      fanInitiatingCount: 0, //启动中风机数量
-      fanOfflineCount: 0, //离线风机数量
-      fanWaitWindCount: 0, //待风停机风机数量
-      fanWaitMaintainCount: 0, //维护停机风机数量
-      fanFaultCount: 0, //故障风机数量
-      windFarmMapChart: null, //风场地图
-      checkStatus: {
+      checkStatus: { // 风机状态选择按钮
         all: "_",
         normal: "outline",
         initiating: "outline",
@@ -162,6 +192,29 @@ export default {
         waitMaintain: "outline",
         fault: "outline",
       },
+      fanList: {},//风机列表
+      fanCount:[0,0,0,0,0,0],//风机数量
+      fanFliter: [], //风机状态过滤
+      windFarmMapChart: null, //风场地图
+      windFarmInfo: {
+        id: 0, //风场id
+        name: "", //风场名称
+        wind_speed: 0, //风速
+        active_power: 0, //有功功率
+        reactive_power: 0, //无功功率
+        total_electric: 0, // 总发电量
+        day_electric: 0, // 日发电量
+        month_electric: 0, // 月发电量
+        year_electric: 0, // 年发电量
+      }, //风场信息
+      fanStatus: {
+        0: "正常风机",
+        1: "启动中风机",
+        2: "离线风机",
+        3: "待风风机",
+        4: "维护风机",
+        5: "故障风机",
+      },
     };
   },
   created() {
@@ -169,10 +222,12 @@ export default {
   },
 
   mounted() {
-    this.drawSvgMap();
-    this.drawWindSpeedChart();
-    this.drawActivePowerChart();
-    this.drawReactivePowerChart();
+    this.$nextTick(() => {
+      this.drawSvgMap();
+      this.drawWindSpeedChart();
+      this.drawActivePowerChart();
+      this.drawReactivePowerChart();
+    });
   },
   methods: {
     //响应选择风机状态按钮消息
@@ -196,49 +251,49 @@ export default {
             style: {
               image: url,
               x: api.coord([
-                realData[params.dataIndex].coord_x,
-                realData[params.dataIndex].coord_y,
+                realData[params.dataIndex].lng,
+                realData[params.dataIndex].lat,
               ])[0],
               y: api.coord([
-                realData[params.dataIndex].coord_x,
-                realData[params.dataIndex].coord_y,
+                realData[params.dataIndex].lng,
+                realData[params.dataIndex].lat,
               ])[1],
             },
           },
           {
             type: "text",
             style: {
-              text: realData[params.dataIndex].fan_no,
+              text: realData[params.dataIndex].name,
               x:
                 api.coord([
-                  realData[params.dataIndex].coord_x,
-                  realData[params.dataIndex].coord_y,
+                  realData[params.dataIndex].lng,
+                  realData[params.dataIndex].lat,
                 ])[0] + 15,
               y:
                 api.coord([
-                  realData[params.dataIndex].coord_x,
-                  realData[params.dataIndex].coord_y,
+                  realData[params.dataIndex].lng,
+                  realData[params.dataIndex].lat,
                 ])[1] + 60,
               fill: "#fff",
-              font: "14px Microsoft YaHei",
+              font: "10px Microsoft YaHei",
               backgroundColor: "#000",
             },
           },
           {
             type: "text",
             style: {
-              text: "风速:" + realData[params.dataIndex].wind_speed + "m/s",
+              text: realData[params.dataIndex].wind_speed + "m/s",
               x: api.coord([
-                realData[params.dataIndex].coord_x,
-                realData[params.dataIndex].coord_y,
+                realData[params.dataIndex].lng,
+                realData[params.dataIndex].lat,
               ])[0],
               y:
                 api.coord([
-                  realData[params.dataIndex].coord_x,
-                  realData[params.dataIndex].coord_y,
+                  realData[params.dataIndex].lng,
+                  realData[params.dataIndex].lat,
                 ])[1] - 15,
               fill: "#fff",
-              font: "14px Microsoft YaHei",
+              font: "10px Microsoft YaHei",
               backgroundColor: "#000",
             },
           },
@@ -246,77 +301,33 @@ export default {
       };
     },
     fetchData() {
-      //获取风机数据
-      getFanInfosByWindFarmId(getFarmId())
-        .then((response) => {
-          this.fanData = response.data;
-          //过滤得到不同状态的风机数量
-          this.fanNormalCount = response.data.filter((item) => {
-            return item.status === 0; //正常
-          }).length;
-          this.fanInitiatingCount = response.data.filter((item) => {
-            return item.status === 1; //启动中
-          }).length;
-          this.fanOfflineCount = response.data.filter((item) => {
-            return item.status === 2; //离线
-          }).length;
-          this.fanWaitWindCount = response.data.filter((item) => {
-            return item.status === 3; //待风
-          }).length;
-          this.fanWaitMaintainCount = response.data.filter((item) => {
-            return item.status === 4; //维护
-          }).length;
-          this.fanFaultCount = response.data.filter((item) => {
-            return item.status === 5; //故障
-          }).length;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      this.getWindFarmInfo()
+      this.getFanList()
+    },
+    getWindFarmInfo() {
+      getWindFarmInfo().then((res) => {
+        this.windFarmInfo = res.data;
+      });
+    },
+    getFanList() {
+      getFanList().then((res) => {
+        this.fanList = res.data;
+        this.fanFliter = [];
+        for (var i = 0,len=this.fanList.length; i < len; i+=6) {
+           this.fanFliter.push(this.fanList.slice(i, i+6));
+          }
+        for(i=0;i<6;i++) {
+          this.fanCount[i] = this.fanList.filter((fan) => fan.status == i).length
+        }
+      });
     },
     //绘制风场地图，包括风机图标
     renderItem(params, api) {
-      if (this.fanData[params.dataIndex].status === 0)
-        return this.addFanImage(
-          "./fan/正常风机.png",
+      return this.addFanImage(
+          `./fan/${this.fanStatus[this.fanList[params.dataIndex].status]}.png`,
           params,
           api,
-          this.fanData
-        );
-      else if (this.fanData[params.dataIndex].status === 1)
-        return this.addFanImage(
-          "./fan/启动中风机.png",
-          params,
-          api,
-          this.fanData
-        );
-      else if (this.fanData[params.dataIndex].status === 2)
-        return this.addFanImage(
-          "./fan/离线风机.png",
-          params,
-          api,
-          this.fanData
-        );
-      else if (this.fanData[params.dataIndex].status === 3)
-        return this.addFanImage(
-          "./fan/待风风机.png",
-          params,
-          api,
-          this.fanData
-        );
-      else if (this.fanData[params.dataIndex].status === 4)
-        return this.addFanImage(
-          "./fan/维护风机.png",
-          params,
-          api,
-          this.fanData
-        );
-      else if (this.fanData[params.dataIndex].status === 5)
-        return this.addFanImage(
-          "./fan/故障风机.png",
-          params,
-          api,
-          this.fanData
+          this.fanList
         );
     },
     ///////////////////////////////////////////////////
@@ -366,7 +377,7 @@ export default {
               name: "fanInfos",
               type: "custom", //自定义系列
               coordinateSystem: "geo", //使用地理坐标系
-              renderItem: this.renderItem, //这里不能使用匿名函数，否则获取不到fanData，具体原有未知
+              renderItem: this.renderItem, //渲染风机图标
             },
           ],
         };
@@ -376,9 +387,10 @@ export default {
         };
       });
     },
-    ///////////////////////////////////////////////////
-    drawWindSpeedChart() {
+     ///////////////////////////////////////////////////
+     drawWindSpeedChart() {
       var chartDom = document.getElementById("windSpeedChart");
+      if(chartDom == null) return
       var myChart = echarts.init(chartDom);
       var option;
 
@@ -469,7 +481,7 @@ export default {
             },
             data: [
               {
-                value: 12.5,
+                value: this.windFarmInfo.wind_speed,
                 name: "m/s",
                 title: {
                   offsetCenter: [0, 0],
@@ -492,6 +504,7 @@ export default {
     ///////////////////////////////////////////////////
     drawActivePowerChart() {
       var chartDom = document.getElementById("powerActiveChart");
+      if(chartDom == null) return
       var myChart = echarts.init(chartDom);
       var option;
       option = {
@@ -581,7 +594,7 @@ export default {
             },
             data: [
               {
-                value: 22.5,
+                value: this.windFarmInfo.active_power,
                 name: "MW",
                 title: {
                   offsetCenter: [0, 5],
@@ -603,6 +616,7 @@ export default {
     ///////////////////////////////////////////////////
     drawReactivePowerChart() {
       var chartDom = document.getElementById("powerReactiveChart");
+      if(chartDom == null) return
       var myChart = echarts.init(chartDom);
       var option;
       option = {
@@ -692,7 +706,7 @@ export default {
             },
             data: [
               {
-                value: 12.9,
+                value: this.windFarmInfo.reactive_power,
                 name: "Mvar",
                 title: {
                   offsetCenter: [0, 5],
@@ -713,13 +727,21 @@ export default {
     },
   },
   watch: {
-    //监听风机数据变化，因为风机数据是异步获取的，所以需要监听数据变化，重新绘制风机图标
-    fanData: {
+    windFarmInfo: {
+      handler: function () {
+        this.drawSvgMap();
+        this.drawWindSpeedChart();
+        this.drawActivePowerChart();
+        this.drawReactivePowerChart();
+      },
+      deep: true,
+    },
+    fanList: {
       handler: function () {
         const mapOption = {
           series: [
             {
-              data: this.fanData,
+              data: this.fanList,
             },
           ],
         };
@@ -728,6 +750,7 @@ export default {
           this.windFarmMapChart.reSize();
         };
       },
+      deep: true,
     },
   },
 };

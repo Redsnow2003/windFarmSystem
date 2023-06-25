@@ -6,8 +6,7 @@ const TheContainer = () => import('@/containers/TheContainer')
 
 const WindFarmOverview = () => import('@/views/scada/windfarm/windfarmview')
 const WindFarmMap = () => import('@/views/scada/windfarm/windfarmmap')
-const WindFarmList = () => import('@/views/scada/windfarm/windfarmlist')
-const WindFarmQuery = () => import('@/views/scada/windfarm/windfarmquery')
+
 const FanStatus = () => import('@/views/scada/fanstatus/fanstatus')
 
 const PartStatusWheel = () => import('@/views/scada/partstatus/wheel')
@@ -42,13 +41,13 @@ var router = new Router({
     },
     {
       path: '/',
-      redirect: '/windfarm/windfarmmap',
+      redirect: '/windfarm/WindFarmview',
       name: '风电场中央中控系统',
       component: TheContainer,
       children: [
         {
           path: 'windfarm',
-          redirect: '/windfarm/windfarmmap',
+          redirect: '/windfarm/WindFarmview',
           name: '全风场',
           component: {
             render (c) { return c('router-view') }
@@ -63,16 +62,6 @@ var router = new Router({
               path: '/windfarm/windfarmmap',
               name: '地图',
               component: WindFarmMap
-            },
-            {
-              path: '/windfarm/WindFarmList',
-              name: '列表',
-              component: WindFarmList
-            },
-            {
-              path: '/windfarm/WindFarmQuery',
-              name: '信息',
-              component: WindFarmQuery
             }
           ]
         },

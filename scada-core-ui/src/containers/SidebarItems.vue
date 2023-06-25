@@ -29,17 +29,7 @@ export default
                 name: '全风场地图',
                 to: '/windfarm/windfarmmap',
                 icon: 'cil-globe-alt'
-              },
-              {
-                name: '全风场列表',
-                to: '/windfarm/windfarmlist',
-                icon: 'cil-globe-alt'
-              },
-              {
-                name: '全风场查询',
-                to: '/windfarm/windfarmquery',
-                icon: 'cil-globe-alt'
-              },
+              }
             ]
           },
           {
