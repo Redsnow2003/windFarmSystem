@@ -32,9 +32,9 @@
   </script>
    <style scoped>
    .rectangle{
-       border-radius: 7px;
+       border-radius: 10px;
        position: relative;
-       background-image: linear-gradient(left, rgb(182, 24, 3) 0%, rgb(253, 106, 27) 90%); 
+       background-image: linear-gradient(left, rgb(210, 10, 87) 0%, rgb(253, 106, 27) 90%); 
    }
 
    </style>

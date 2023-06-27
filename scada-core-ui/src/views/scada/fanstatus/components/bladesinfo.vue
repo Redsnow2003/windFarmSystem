@@ -6,6 +6,7 @@
         <CRow>
           <CCol sm="4" lg="4" style="text-align: center">
             <h3>1号桨叶</h3>
+            <h7 :style="{color: statusColor[bladeInfo.blade1_status]}">状态：{{ bladeInfo.blade1_status }}</h7>
           </CCol>
           <CCol sm="8" lg="8" style="text-align: center">
             <div
@@ -17,6 +18,7 @@
         <CRow>
           <CCol sm="4" lg="4" style="text-align: center">
             <h3>2号桨叶</h3>
+            <h7 :style="{color: statusColor[bladeInfo.blade2_status]}">状态：{{ bladeInfo.blade2_status }}</h7>
           </CCol>
           <CCol sm="8" lg="8" style="text-align: center">
             <div
@@ -28,6 +30,7 @@
         <CRow>
           <CCol sm="4" lg="4" style="text-align: center">
             <h3>3号桨叶</h3>
+            <h7 :style="{color: statusColor[bladeInfo.blade3_status]}">状态：{{ bladeInfo.blade3_status }}</h7>
           </CCol>
           <CCol sm="8" lg="8" style="text-align: center">
             <div
@@ -42,15 +45,29 @@
         
   <script>
   import * as echarts from "echarts";
+  import { getFanBladeInfo } from "@/api/fan";
   export default {
     name: "BladesInfo",
     data() {
-      return {};
+      return {
+        bladeInfo: {
+          id: 1, //桨叶id
+          fan_id: 1, //风机id
+          blade1_status: "正常", //1号桨叶状态
+          blade1_angle: 0, //1号桨叶角度
+          blade2_status: "正常", //2号桨叶状态
+          blade2_angle: 0, //2号桨叶角度
+          blade3_status: "正常", //3号桨叶状态
+          blade3_angle: 0, //3号桨叶角度
+        },
+        statusColor: {
+          正常: "#4ed6b3",
+          异常: "#ff0000",
+        },
+      };
     },
-    props: {
-      fanName: String, //风机名称
-      fanStatus: String, //风机状态
-      alertLevel: String, //警报等级
+    created() {
+      this.getBladeInfo();
     },
     mounted() {
       this.drawBlade1Chart()
@@ -59,6 +76,17 @@
     },
     methods: {
       ///////////////////////////////////////////////////
+      getBladeInfo() {
+        getFanBladeInfo(1).then((res) => {
+          if (res.code == 200) {
+            console.log(res.data);
+            this.bladeInfo = res.data;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      },
       drawBlade1Chart() {
         var chartDom = document.getElementById("blade1Chart");
         var myChart = echarts.init(chartDom);
@@ -69,8 +97,8 @@
             formatter: "{a} <br/>{b} : {c}%",
           },
           title: {
-            text: "全场风速",
-            left: "42%",
+            text: "桨叶1位置",
+            left: "30%",
             top: "60%",
             textStyle: {
               color: "#9fdfdf",
@@ -82,7 +110,7 @@
               name: "Pressure",
               type: "gauge",
               min: 0,
-              max: 20,
+              max: 360,
               splitNumber: 5,
               startAngle: 190,
               endAngle: -10,
@@ -151,17 +179,11 @@
               },
               data: [
                 {
-                  value: 12.5,
-                  name: "m/s",
-                  title: {
+                  value: this.bladeInfo.blade1_angle,
+                  detail: {
                     offsetCenter: [0, 0],
                     color: "#9fdfdf",
-                    fontSize: 15,
-                  },
-                  detail: {
-                    offsetCenter: [0, -20],
-                    color: "#9fdfdf",
-                    fontSize: 22,
+                    fontSize: 17,
                   },
                 },
               ],
@@ -181,8 +203,8 @@
             formatter: "{a} <br/>{b} : {c}%",
           },
           title: {
-            text: "全场风速",
-            left: "42%",
+            text: "桨叶2位置",
+            left: "30%",
             top: "60%",
             textStyle: {
               color: "#9fdfdf",
@@ -194,7 +216,7 @@
               name: "Pressure",
               type: "gauge",
               min: 0,
-              max: 20,
+              max: 360,
               splitNumber: 5,
               startAngle: 190,
               endAngle: -10,
@@ -263,17 +285,11 @@
               },
               data: [
                 {
-                  value: 12.5,
-                  name: "m/s",
-                  title: {
+                  value: this.bladeInfo.blade2_angle,
+                  detail: {
                     offsetCenter: [0, 0],
                     color: "#9fdfdf",
-                    fontSize: 15,
-                  },
-                  detail: {
-                    offsetCenter: [0, -20],
-                    color: "#9fdfdf",
-                    fontSize: 22,
+                    fontSize: 17,
                   },
                 },
               ],
@@ -293,8 +309,8 @@
             formatter: "{a} <br/>{b} : {c}%",
           },
           title: {
-            text: "全场风速",
-            left: "42%",
+            text: "桨叶3位置",
+            left: "30%",
             top: "60%",
             textStyle: {
               color: "#9fdfdf",
@@ -306,7 +322,7 @@
               name: "Pressure",
               type: "gauge",
               min: 0,
-              max: 20,
+              max: 360,
               splitNumber: 5,
               startAngle: 190,
               endAngle: -10,
@@ -375,17 +391,16 @@
               },
               data: [
                 {
-                  value: 12.5,
-                  name: "m/s",
+                  value: this.bladeInfo.blade3_angle,
                   title: {
                     offsetCenter: [0, 0],
                     color: "#9fdfdf",
                     fontSize: 15,
                   },
                   detail: {
-                    offsetCenter: [0, -20],
+                    offsetCenter: [0, 0],
                     color: "#9fdfdf",
-                    fontSize: 22,
+                    fontSize: 17,
                   },
                 },
               ],
@@ -394,6 +409,16 @@
         };
   
         option && myChart.setOption(option);
+      },
+    },
+    watch: {
+      bladeInfo: {
+        handler: function () {
+          this.drawBlade1Chart();
+          this.drawBlade2Chart();
+          this.drawBlade3Chart();
+        },
+        deep: true,
       },
     },
   };

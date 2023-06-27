@@ -4,7 +4,7 @@
       <CCol sm="8" lg="8">
         <CRow>
           <CCol sm="4" lg="4">
-            <FanBaseInfo fanName="A01" fanStatus="正常" alertLevel="正常" />
+            <FanBaseInfo />
           </CCol>
           <CCol sm="8" lg="8">
             <MachineStatus />
@@ -63,7 +63,7 @@ import BladesInfo from "./components/bladesinfo"; //引入组件
 import GridStatus from "./components/gridstatus"; //引入组件
 import TemperatureInfo from "./components/temperatureinfo"; //引入组件
 export default {
-  name: "WindFarmMap",
+  name: "FanStatus",
   data() {
     return {};
   },

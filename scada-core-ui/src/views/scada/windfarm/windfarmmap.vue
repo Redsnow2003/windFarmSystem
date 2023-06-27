@@ -240,6 +240,29 @@ export default {
       this.checkStatus.waitMaintain = "outline";
       this.checkStatus.fault = "outline";
       this.checkStatus[status] = "_";
+      switch (status) {
+        case "all":
+          this.fanFliter = this.fanList;
+          break;
+        case "normal":
+        this.fanFliter = this.fanList.filter((fan) => fan.status == 0);
+          break;
+        case "initiating":
+        this.fanFliter = this.fanList.filter((fan) => fan.status == 1);
+          break;
+        case "offline":
+        this.fanFliter = this.fanList.filter((fan) => fan.status == 2);
+          break;
+        case "waitWind":
+        this.fanFliter = this.fanList.filter((fan) => fan.status == 3);
+          break;
+        case "waitMaintain":
+        this.fanFliter = this.fanList.filter((fan) => fan.status == 4);
+          break;
+        case "fault":
+        this.fanFliter = this.fanList.filter((fan) => fan.status == 5);
+          break;
+      }
     },
     //地图上添加风机图标
     addFanImage(url, params, api, realData) {
@@ -312,11 +335,8 @@ export default {
     getFanList() {
       getFanList().then((res) => {
         this.fanList = res.data;
-        this.fanFliter = [];
-        for (var i = 0,len=this.fanList.length; i < len; i+=6) {
-           this.fanFliter.push(this.fanList.slice(i, i+6));
-          }
-        for(i=0;i<6;i++) {
+        this.fanFliter = this.fanList;
+        for(var i=0; i<6; i++) {
           this.fanCount[i] = this.fanList.filter((fan) => fan.status == i).length
         }
       });
@@ -324,10 +344,10 @@ export default {
     //绘制风场地图，包括风机图标
     renderItem(params, api) {
       return this.addFanImage(
-          `./fan/${this.fanStatus[this.fanList[params.dataIndex].status]}.png`,
+          `./fan/${this.fanStatus[this.fanFliter[params.dataIndex].status]}.png`,
           params,
           api,
-          this.fanList
+          this.fanFliter
         );
     },
     ///////////////////////////////////////////////////
@@ -736,12 +756,12 @@ export default {
       },
       deep: true,
     },
-    fanList: {
+    fanFliter: {
       handler: function () {
         const mapOption = {
           series: [
             {
-              data: this.fanList,
+              data: this.fanFliter,
             },
           ],
         };

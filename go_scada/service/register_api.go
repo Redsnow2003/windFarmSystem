@@ -6,6 +6,7 @@ import (
 	"main/logger"
 	"main/middleware"
 	"main/module"
+
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -15,7 +16,7 @@ type Option func(*gin.Engine)
 
 var options []Option
 
-//Include 注册app的路由配置
+// Include 注册app的路由配置
 func Include(opts ...Option) {
 	options = append(options, opts...)
 }
@@ -39,6 +40,11 @@ func Init() *gin.Engine {
 	r.POST("/login", module.LoginHandler)
 	r.GET("/windFarm/getWindFarmInfo", module.GetWindFarmInfo)
 	r.GET("/fan/getFanList", module.GetFanList)
+	r.GET("/fan/getFanInfo", module.GetFanInfo)
+	r.GET("/fan/getFanBladeInfo", module.GetFanBladeInfo)
+	r.GET("/fan/getFanGridInfo", module.GetFanGridInfo)
+	r.GET("/fan/getFanMachineInfo", module.GetFanMachineInfo)
+	r.GET("/fan/getFanTemperatureInfo", module.GetFanTemperatureInfo)
 
 	r.NoRoute(authMiddleware.MiddlewareFunc(), func(c *gin.Context) {
 		c.JSON(404, gin.H{"code": 404, "message": "Page not found"})
@@ -59,7 +65,7 @@ func StartApi() {
 	if err != nil {
 		logger.Fatalf("Get config failed! err: #%v", err)
 	}
-	fmt.Printf("Listening and serving HTTP on %s\n",configBase.Webapi.Uri)
+	fmt.Printf("Listening and serving HTTP on %s\n", configBase.Webapi.Uri)
 	if err := r.Run(configBase.Webapi.Uri); err != nil {
 		logger.Fatalf("Run web server failed! err: #%v", err)
 	}
