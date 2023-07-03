@@ -114,7 +114,7 @@ type FanTemperature struct {
 	GearboxOil     uint32 `gorm:"column:gearbox_oil;type:float;not null" json:"gearbox_oil"`           // 齿轮箱油温
 	GearboxInput   uint32 `gorm:"column:gearbox_input;type:float;not null" json:"gearbox_input"`       // 齿轮箱输入轴温度
 	GearboxOutput  uint32 `gorm:"column:gearbox_output;type:float;not null" json:"gearbox_output"`     // 齿轮箱输出轴温度
-	EngineAricool  uint32 `gorm:"column:engine_aricool;type:float;not null" json:"engine_aricool"`     // 发动机空气冷却器温度
+	EngineAircool  uint32 `gorm:"column:engine_aircool;type:float;not null" json:"engine_aircool"`     // 发动机空气冷却器温度
 	EngineBearingA uint32 `gorm:"column:engine_bearing_a;type:float;not null" json:"engine_bearing_a"` // 发动机轴承A温度
 	EngineBearingB uint32 `gorm:"column:engine_bearing_b;type:float;not null" json:"engine_bearing_b"` // 发动机轴承B温度
 	StatorU1       uint32 `gorm:"column:stator_u1;type:float;not null" json:"stator_u1"`               // 定子U1温度
@@ -126,6 +126,8 @@ type FanTemperature struct {
 	EngineroomAir  uint32 `gorm:"column:engineroom_air;type:float;not null" json:"engineroom_air"`     // 机舱空气温度
 	EngineroomBox  uint32 `gorm:"column:engineroom_box;type:float;not null" json:"engineroom_box"`     // 机舱箱温度
 	EngineroomOut  uint32 `gorm:"column:engineroom_out;type:float;not null" json:"engineroom_out"`     // 机舱外温度
+	SpindleGearbox uint32 `gorm:"column:spindle_gearbox;type:float;not null" json:"spindle_gearbox"`   // 主轴承齿轮箱温度
+	SpindleWheel   uint32 `gorm:"column:spindle_wheel;type:float;not null" json:"spindle_wheel"`       // 主轴承风轮温度
 	TowerTube      uint32 `gorm:"column:tower_tube;type:float;not null" json:"tower_tube"`             // 塔筒温度
 	BottomBox      uint32 `gorm:"column:bottom_box;type:float;not null" json:"bottom_box"`             // 底部箱温度
 }

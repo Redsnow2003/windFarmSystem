@@ -46,6 +46,7 @@
   <script>
   import * as echarts from "echarts";
   import { getFanBladeInfo } from "@/api/fan";
+  import { getCurrentFanId } from "@/store/fan";
   export default {
     name: "BladesInfo",
     data() {
@@ -77,7 +78,7 @@
     methods: {
       ///////////////////////////////////////////////////
       getBladeInfo() {
-        getFanBladeInfo(1).then((res) => {
+        getFanBladeInfo(getCurrentFanId()).then((res) => {
           if (res.code == 200) {
             console.log(res.data);
             this.bladeInfo = res.data;

@@ -53,7 +53,12 @@
           <CContainer v-for="(item,index) in fanFliter" :key="index">
             <CRow>
               <CCol  v-for="(fan,index2) in item" :key="index2" lg="2">
-                <FanWidget :fanStatus="fanStatus[fan.status]" :fanName="fan.name" :windSpeed="fan.wind_speed" :power="fan.power"/>
+                <FanWidget :fanStatus="fanStatus[fan.status]" 
+                :fanId="fan.id"
+                :fanName="fan.name" 
+                :windSpeed="fan.wind_speed" 
+                :power="fan.power"
+                />
               </CCol>
             </CRow>
           </CContainer>

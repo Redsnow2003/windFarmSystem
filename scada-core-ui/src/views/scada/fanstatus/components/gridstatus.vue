@@ -16,23 +16,23 @@
         </CRow>
         <CRow>
           <CCol sm="6" lg="6" style="text-align: center">
-            <div>有功功率：12.3kw</div>
+            <div>有功功率：{{ gridInfo.active_power }}kw</div>
           </CCol>
           <CCol sm="6" lg="6" style="text-align: center">
-            <div>无功功率：0.00KVar</div>
+            <div>无功功率：{{ gridInfo.reactive_power }}KVar</div>
           </CCol>
         </CRow>
         <CRow style="height: 50px;"></CRow>
         <CRow>
           <CCol sm="6" lg="6" style="text-align: center">
-            <p>粗电压1：627.5V</p>
-            <p>粗电压1：627.5V</p>
-            <p>粗电压1：627.5V</p>
+            <p>U1相绕组电压：{{ gridInfo.crude_voltage1 }}V</p>
+            <p>U2相绕组电压：{{ gridInfo.crude_voltage2 }}V</p>
+            <p>U2相绕组电压：{{ gridInfo.crude_voltage3 }}V</p>
           </CCol>
           <CCol sm="6" lg="6" style="text-align: center">
-            <p>粗电压1：627.5V</p>
-            <p>粗电压1：627.5V</p>
-            <p>粗电压1：627.5V</p>
+            <p>U1相绕组电流：{{ gridInfo.crude_current1 }}V</p>
+            <p>U2相绕组电流：{{ gridInfo.crude_current2 }}V</p>
+            <p>U3相绕组电流：{{ gridInfo.crude_current3 }}V</p>
           </CCol>
         </CRow>
       </div>
@@ -41,15 +41,30 @@
         
   <script>
   import * as echarts from "echarts";
+  import { getFanGridInfo } from "@/api/fan";
+  import { getCurrentFanId } from "@/store/fan";
   export default {
     name: "GridStatus",
     data() {
-      return {};
+      return {
+        gridInfo: {
+          id: 1,//电网id
+          fan_id: 1,//风机id
+          power_factor: 0.00,//功率因数
+          energy_frequency: 0.00,//电网频率
+          active_power: 0.00,//有功功率
+          reactive_power: 0.00,//无功功率
+          crude_voltage1: 0.00,//粗电压1
+          crude_voltage2: 0.00,//粗电压2
+          crude_voltage3: 0.00,//粗电压3
+          crude_current1: 0.00,//粗电流1
+          crude_current2: 0.00,//粗电流2
+          crude_current3: 0.00//粗电流3
+        },
+      };
     },
-    props: {
-      fanName: String, //风机名称
-      fanStatus: String, //风机状态
-      alertLevel: String, //警报等级
+    created() {
+      this.getGridInfo();
     },
     mounted() {
       this.drawPowerChart();
@@ -57,6 +72,17 @@
     },
     methods: {
       ///////////////////////////////////////////////////
+      getGridInfo() {
+        getFanGridInfo(getCurrentFanId()).then((res) => {
+          if (res.code == 200) {
+            console.log(res.data);
+            this.gridInfo = res.data;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      },
       drawPowerChart() {
         var chartDom = document.getElementById("powerChart");
         var myChart = echarts.init(chartDom);
@@ -67,8 +93,8 @@
             formatter: "{a} <br/>{b} : {c}%",
           },
           title: {
-            text: "全场风速",
-            left: "42%",
+            text: "功率因数",
+            left: "40%",
             top: "60%",
             textStyle: {
               color: "#9fdfdf",
@@ -149,7 +175,7 @@
               },
               data: [
                 {
-                  value: 12.5,
+                  value: this.gridInfo.power_factor,
                   name: "m/s",
                   title: {
                     offsetCenter: [0, 0],
@@ -179,8 +205,8 @@
             formatter: "{a} <br/>{b} : {c}%",
           },
           title: {
-            text: "全场风速",
-            left: "42%",
+            text: "电能频率",
+            left: "40%",
             top: "60%",
             textStyle: {
               color: "#9fdfdf",
@@ -192,7 +218,7 @@
               name: "Pressure",
               type: "gauge",
               min: 0,
-              max: 20,
+              max: 200,
               splitNumber: 5,
               startAngle: 190,
               endAngle: -10,
@@ -261,8 +287,8 @@
               },
               data: [
                 {
-                  value: 12.5,
-                  name: "m/s",
+                  value: this.gridInfo.energy_frequency,
+                  name: "HZ",
                   title: {
                     offsetCenter: [0, 0],
                     color: "#9fdfdf",
@@ -280,6 +306,15 @@
         };
   
         option && myChart.setOption(option);
+      },
+    },
+    watch: {
+      gridInfo: {
+        handler: function () {
+          this.drawPowerChart();
+          this.drawElectricityChart();
+        },
+        deep: true,
       },
     },
   };

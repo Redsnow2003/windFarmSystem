@@ -1,5 +1,5 @@
 <template>
-  <div class="card rectangle" >
+  <div class="card rectangle" style="cursor: pointer;" @click="dblBtnClick">
     <tr>
         <td>
             <li class="small" :style="{color: color}" style="height: 5px;margin-top: 5px;margin-left: 5px;">{{fanStatus}}</li>
@@ -8,7 +8,7 @@
     <div class="card-body" >
       <div style="text-align:center;">
         <img :src="require(`@/../public/fan/${fanStatus}.png`)"/>
-        <div class="text" :style="{color: color}">{{ fanName }}</div>
+        <div class="text" :style="{color: color}">{{ fanName }}({{ fanId }})</div>
       </div>
     </div>
     <tr>
@@ -25,6 +25,7 @@
 </template>
   
   <script>
+  import { setCurrentFanId } from "@/store/fan";
 export default {
   name: "FanWidget",
   data() {
@@ -33,6 +34,7 @@ export default {
     };
   },
   props: {
+    fanId: Number, //风机id
     fanName: String, //风机名称
     fanStatus: String, //风机状态
     windSpeed: Number, //风速
@@ -52,6 +54,14 @@ export default {
     }else if(this.fanStatus == "故障风机"){
         this.color = "#b30000";
     }
+  },
+  methods: {
+    dblBtnClick() {
+      setCurrentFanId(this.fanId);
+      this.$router.push({
+        path: "/fanstatus"
+      });
+    },
   },
   watch: {
     fanStatus: function (val) {

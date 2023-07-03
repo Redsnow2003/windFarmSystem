@@ -33,11 +33,11 @@ func GetFanList(c *gin.Context) {
 
 // @Summary 获取风机信息
 func GetFanInfo(c *gin.Context) {
-	fanId := c.Param("fanId")
+	fanId := c.Query("fanId")
 	// 获取数据库连接
 	db := model.Db
 	var fanInfo model.Fan
-	db.Model(model.Fan{}).Find(&fanInfo).Where("fan_id = ?", fanId)
+	db.Model(model.Fan{}).Where("id = ?", fanId).Find(&fanInfo)
 	c.JSON(http.StatusOK, gin.H{
 		"code": http.StatusOK,
 		"data": fanInfo,
@@ -46,11 +46,11 @@ func GetFanInfo(c *gin.Context) {
 
 // @Summary 获取风机桨叶信息
 func GetFanBladeInfo(c *gin.Context) {
-	fanId := c.Param("fanId")
+	fanId := c.Query("fanId")
 	// 获取数据库连接
 	db := model.Db
 	var fanBladeInfo model.FanBlade
-	db.Model(model.FanBlade{}).Find(&fanBladeInfo).Where("fan_id = ?", fanId)
+	db.Model(model.FanBlade{}).Where("fan_id = ?", fanId).Find(&fanBladeInfo)
 	c.JSON(http.StatusOK, gin.H{
 		"code": http.StatusOK,
 		"data": fanBladeInfo,
@@ -59,11 +59,11 @@ func GetFanBladeInfo(c *gin.Context) {
 
 // @Summary 获取风机电网信息
 func GetFanGridInfo(c *gin.Context) {
-	fanId := c.Param("fanId")
+	fanId := c.Query("fanId")
 	// 获取数据库连接
 	db := model.Db
 	var fanGridInfo model.FanGrid
-	db.Model(model.FanGrid{}).Find(&fanGridInfo).Where("fan_id = ?", fanId)
+	db.Model(model.FanGrid{}).Where("fan_id = ?", fanId).Find(&fanGridInfo)
 	c.JSON(http.StatusOK, gin.H{
 		"code": http.StatusOK,
 		"data": fanGridInfo,
@@ -72,11 +72,11 @@ func GetFanGridInfo(c *gin.Context) {
 
 // @Summary 获取风机机械信息
 func GetFanMachineInfo(c *gin.Context) {
-	fanId := c.Param("fanId")
+	fanId := c.Query("fanId")
 	// 获取数据库连接
 	db := model.Db
 	var fanMachineInfo model.FanMachine
-	db.Model(model.FanMachine{}).Find(&fanMachineInfo).Where("fan_id = ?", fanId)
+	db.Model(model.FanMachine{}).Where("fan_id = ?", fanId).Find(&fanMachineInfo)
 	c.JSON(http.StatusOK, gin.H{
 		"code": http.StatusOK,
 		"data": fanMachineInfo,
@@ -85,11 +85,11 @@ func GetFanMachineInfo(c *gin.Context) {
 
 // @Summary 获取风机温度信息
 func GetFanTemperatureInfo(c *gin.Context) {
-	fanId := c.Param("fanId")
+	fanId := c.Query("fanId")
 	// 获取数据库连接
 	db := model.Db
 	var fanTemperatureInfo model.FanTemperature
-	db.Model(model.FanTemperature{}).Find(&fanTemperatureInfo).Where("fan_id = ?", fanId)
+	db.Model(model.FanTemperature{}).Where("fan_id = ?", fanId).Find(&fanTemperatureInfo)
 	c.JSON(http.StatusOK, gin.H{
 		"code": http.StatusOK,
 		"data": fanTemperatureInfo,

@@ -106,21 +106,10 @@ export default {
             type: "line",
             symbol: "none",
             sampling: "lttb",
+            smooth: true,
             itemStyle: {
               color: "rgb(255, 70, 131)",
-            },
-            areaStyle: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                {
-                  offset: 0,
-                  color: "rgb(255, 158, 68)",
-                },
-                {
-                  offset: 1,
-                  color: "rgb(255, 70, 131)",
-                },
-              ]),
-            },
+            },   
             data: data,
           },
         ],

@@ -55,6 +55,7 @@
 <script>
 import * as echarts from "echarts";
 import { getFanMachineInfo } from "@/api/fan";
+import { getCurrentFanId } from "@/store/fan";
 export default {
   name: "MachineStatus",
   data() {
@@ -83,7 +84,7 @@ export default {
   methods: {
     ///////////////////////////////////////////////////
     getMachineInfo() {
-      getFanMachineInfo(1).then((res) => {
+      getFanMachineInfo(getCurrentFanId()).then((res) => {
           if (res.code == 200) {
             this.machineInfo = res.data;
           }

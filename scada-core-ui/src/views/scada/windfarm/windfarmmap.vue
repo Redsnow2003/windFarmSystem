@@ -179,6 +179,8 @@ import * as echarts from "echarts";
 import axios from "axios";
 import { getWindFarmInfo } from "@/api/windfarm";
 import { getFanList } from "@/api/fan";
+import { setCurrentFanId } from "@/store/fan";
+import router from "@/router";
 export default {
   name: "WindFarmMap",
   data() {
@@ -361,6 +363,14 @@ export default {
         );
         //注册地图
         echarts.registerMap("windfarm", mapJson);
+        this.windFarmMapChart.on('click',function(args){
+          console.log(args);
+          if(args.data == null) return;
+          setCurrentFanId(args.data.id);
+          router.push({
+            path: "/fanstatus"
+          });
+        })
         //地图配置信息
         const mapOption = {
           geo: {
