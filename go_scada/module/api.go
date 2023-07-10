@@ -3,7 +3,6 @@ package module
 import (
 	"main/model"
 	"net/http"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -93,5 +92,81 @@ func GetFanTemperatureInfo(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"code": http.StatusOK,
 		"data": fanTemperatureInfo,
+	})
+}
+
+// @Summary 获取风机电力统计信息
+func GetFanElectricInfo(c *gin.Context) {
+	fanId := c.Query("fanId")
+	// 获取数据库连接
+	db := model.Db
+	var fanElectricInfo model.FanElectric
+	db.Model(model.FanElectric{}).Where("fan_id = ?", fanId).Find(&fanElectricInfo)
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"data": fanElectricInfo,
+	})
+}
+
+// @Summary 获取风机时间统计信息
+func GetFanTimeInfo(c *gin.Context) {
+	fanId := c.Query("fanId")
+	// 获取数据库连接
+	db := model.Db
+	var fanTimeInfo model.FanTime
+	db.Model(model.FanTime{}).Where("fan_id = ?", fanId).Find(&fanTimeInfo)
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"data": fanTimeInfo,
+	})
+}
+
+// @Summary 获取风机风向统计信息
+func GetFanWindDirectionInfo(c *gin.Context) {
+	fanId := c.Query("fanId")
+	// 获取数据库连接
+	db := model.Db
+	var fanWindDirectionInfo []model.FanDirection
+	db.Model(model.FanDirection{}).Where("fan_id = ?", fanId).Find(&fanWindDirectionInfo)
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"data": fanWindDirectionInfo,
+	})
+}
+
+// @Summary 获取风机参考功率曲线信息
+func GetFanReferencePowerInfo(c *gin.Context) {
+	fanId := c.Query("fanId")
+	// 获取数据库连接
+	db := model.Db
+	var fan model.Fan
+	result := db.Model(model.Fan{}).Where("id = ?", fanId).Find(&fan)
+	if result.RowsAffected == 0 {
+		c.JSON(http.StatusOK, gin.H{
+			"code": http.StatusOK,
+			"data": nil,
+		})
+		return
+	}
+	var referencePowerInfo []model.ReferencePower
+	db.Model(model.ReferencePower{}).Where("type_id = ?", fan.Type).Find(&referencePowerInfo)
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"data": referencePowerInfo,
+	})
+}
+
+// @Summary 获取风机功率曲线信息
+func GetFanPowerCurveInfo(c *gin.Context) {
+	fanId := c.Query("fanId")
+	startDate := c.Query("startDate")
+	endDate := c.Query("endDate")
+	// 获取数据库连接
+	db := model.Db
+	var fanPowerCurveInfo []model.PowerCurve
+	db.Model(model.PowerCurve{}).Where("fan_id = ? And date between ? and ?", fanId, startDate, endDate).Find(&fanPowerCurveInfo)
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"data": fanPowerCurveInfo,
 	})
 }

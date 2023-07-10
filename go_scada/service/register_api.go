@@ -45,6 +45,11 @@ func Init() *gin.Engine {
 	r.GET("/fan/getFanGridInfo", module.GetFanGridInfo)
 	r.GET("/fan/getFanMachineInfo", module.GetFanMachineInfo)
 	r.GET("/fan/getFanTemperatureInfo", module.GetFanTemperatureInfo)
+	r.GET("/fan/getFanElectricInfo", module.GetFanElectricInfo)
+	r.GET("/fan/getFanTimeInfo", module.GetFanTimeInfo)
+	r.GET("/fan/getFanWindDirectionInfo", module.GetFanWindDirectionInfo)
+	r.GET("/fan/getFanReferencePowerInfo", module.GetFanReferencePowerInfo)
+	r.GET("/fan/getFanPowerCurveInfo", module.GetFanPowerCurveInfo)
 
 	r.NoRoute(authMiddleware.MiddlewareFunc(), func(c *gin.Context) {
 		c.JSON(404, gin.H{"code": 404, "message": "Page not found"})

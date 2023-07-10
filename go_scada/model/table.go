@@ -1,5 +1,7 @@
 package model
 
+import "time"
+
 // 用户表
 type User struct {
 	Id         uint64 `gorm:"column:id;primaryKey;autoIncrement;not null" json:"id"`      // 用户id
@@ -37,6 +39,7 @@ func (WindFarm) TableName() string {
 // 风机表
 type Fan struct {
 	Id          uint64  `gorm:"column:id;primaryKey;autoIncrement;not null" json:"id"`       // 风机id
+	Type 	  	int8    `gorm:"column:type;type:int;not null" json:"type"`                   // 风机类型
 	Name        string  `gorm:"column:name;type:varchar(255);not null" json:"name"`          // 风机名称
 	Power       float32 `gorm:"column:power;type:float;not null" json:"power"`               // 风机功率
 	Status      int8    `gorm:"column:status;type:int;not null" json:"status"`               // 风机状态
@@ -134,4 +137,73 @@ type FanTemperature struct {
 
 func (FanTemperature) TableName() string {
 	return "fan_temperature"
+}
+
+// 风向统计表
+type FanDirection struct {
+	Id        uint64 `gorm:"column:id;primaryKey;autoIncrement;not null" json:"id"` // 风向统计id
+	FanId     uint64 `gorm:"column:fan_id;type:bigint;not null" json:"fan_id"`      // 风机id
+	Direction uint32 `gorm:"column:direction;type:int;not null" json:"direction"`   // 风向
+	Percentage uint32 `gorm:"column:percentage;type:int;not null" json:"percentage"`   // 风向百分比eg: 0.1
+}
+
+func (FanDirection) TableName() string {
+	return "fan_direction"
+}
+
+// 电量统计表
+type FanElectric struct {
+	Id        				uint64 `gorm:"column:id;primaryKey;autoIncrement;not null" json:"id"` // 电量统计id
+	FanId     				uint64 `gorm:"column:fan_id;type:bigint;not null" json:"fan_id"`      // 风机id
+	TotalElectric 			float32 `gorm:"column:total_electric;type:int;not null" json:"total_electric"`   // 总电量
+	TotalConsumption 		float32 `gorm:"column:total_consumption;type:int;not null" json:"total_consumption"`   // 总耗电量
+	ReactiveSend 			float32 `gorm:"column:reactive_send;type:int;not null" json:"reactive_send"`   // 无功发送
+	ReactiveReceive 		float32 `gorm:"column:reactive_receive;type:int;not null" json:"reactive_receive"`   // 无功接收
+}
+
+func (FanElectric) TableName() string {
+	return "fan_electric"
+}
+
+// 时间统计表
+type FanTime struct {
+	Id        				uint64 `gorm:"column:id;primaryKey;autoIncrement;not null" json:"id"` // 时间统计id
+	FanId     				uint64 `gorm:"column:fan_id;type:bigint;not null" json:"fan_id"`      // 风机id
+	Standby 				uint32 `gorm:"column:standby;type:int;not null" json:"standby"`   // 待机时间
+	SelfCheck 				uint32 `gorm:"column:self_check;type:int;not null" json:"self_check"`   // 自检时间
+	GridConnection 			uint32 `gorm:"column:grid_connection;type:int;not null" json:"grid_connection"`   // 并网时间
+	Servicing 				uint32 `gorm:"column:servicing;type:int;not null" json:"servicing"`   // 维护时间
+	NormalShoutdown 		uint32 `gorm:"column:normal_shoutdown;type:int;not null" json:"normal_shoutdown"`   // 正常停机时间
+	FailureShoutdown 		uint32 `gorm:"column:failure_shoutdown;type:int;not null" json:"failure_shoutdown"`   // 故障停机时间
+	Start 					uint32 `gorm:"column:start;type:int;not null" json:"start"`   // 启动状态时间
+	ColdStart 				uint32 `gorm:"column:cold_start;type:int;not null" json:"cold_start"`   // 冷启动时间
+}
+
+func (FanTime) TableName() string {
+	return "fan_time"
+}
+
+// 功率曲线表
+type PowerCurve struct {
+	Id        				uint64 `gorm:"column:id;primaryKey;autoIncrement;not null" json:"id"` // 功率曲线id
+	FanId     				uint64 `gorm:"column:fan_id;type:bigint;not null" json:"fan_id"`      // 风机id
+	Date 					*time.Time `gorm:"column:date;type:int;not null" json:"date"`   // 日期
+	WindSpeed 				float32 `gorm:"column:wind_speed;type:int;not null" json:"wind_speed"`   // 风速
+	Power 					float32 `gorm:"column:power;type:int;not null" json:"power"`   // 功率
+}
+
+func (PowerCurve) TableName() string {
+	return "power_curve"
+}
+
+//  参考功率曲线表
+type ReferencePower struct {
+	Id        				uint64 `gorm:"column:id;primaryKey;autoIncrement;not null" json:"id"` // 参考功率曲线id
+	TypeId	 				uint64 `gorm:"column:type_id;type:bigint;not null" json:"type_id"`      // 风机类型id
+	WindSpeed 				uint32 `gorm:"column:wind_speed;type:int;not null" json:"wind_speed"`   // 风速
+	Power 					float32 `gorm:"column:power;type:int;not null" json:"power"`   // 功率
+}
+
+func (ReferencePower) TableName() string {
+	return "reference_power"
 }

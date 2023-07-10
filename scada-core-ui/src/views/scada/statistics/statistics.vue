@@ -4,7 +4,7 @@
       <CCol sm="8" lg="8">
         <CRow>
           <CCol sm="5" lg="5">
-            <FanBaseInfo fanName="A01" fanStatus="正常" alertLevel="正常" />
+            <FanBaseInfo />
           </CCol>
           <CCol sm="7" lg="7">
             <PowerStat />
@@ -37,10 +37,6 @@ import WindDirection from "./components/winddirection"; //引入组件
 import FanTime from "./components/fantime"; //引入组件
 export default {
   name: "WindFarmMap",
-  data() {
-    return {};
-  },
-  created() {},
   components: {
     FanBaseInfo,
     PowerStat,
@@ -48,8 +44,5 @@ export default {
     WindDirection,
     FanTime
   }, //注册组件
-  mounted() {},
-  methods: {},
-  watch: {},
 };
 </script>
