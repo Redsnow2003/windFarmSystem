@@ -192,13 +192,6 @@
 </template>
 
 <script>
-import {
-  getAllUserInfo,
-  postDeleteUser,
-  addNewUser,
-  checkPassword,
-  changePassword,
-} from "@/api/user";
 import { Message } from "element-ui";
 export default {
   name: "userSetting",

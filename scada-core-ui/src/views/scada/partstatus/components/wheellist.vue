@@ -29,7 +29,7 @@
                 <CCol> ---- </CCol>
               </CRow>
             </CListGroupItem>
-            <CListGroupItem style="color:aquamarine">
+            <CListGroupItem style="color:crimson">
               <CRow>
                 <CCol class="link-right"> 0.2rad/s </CCol>
                 <CCol class="link-right"> ---- </CCol>

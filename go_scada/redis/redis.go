@@ -2,7 +2,7 @@ package redis
 
 import (
 	"fmt"
-	"github.com/garyburd/redigo/redis"
+	"github.com/gomodule/redigo/redis"
 	"main/config"
 )
 
@@ -23,7 +23,8 @@ func init() {
 		MaxActive: 0,			// 最大连接数，0表示不限制
 		IdleTimeout: 100,		// 最大空闲时间
 		Dial: func() (redis.Conn, error) {
-			return redis.Dial("tcp", fmt.Sprintf("%s:%d", configBase.Redis.Host, configBase.Redis.Port))
+			return redis.Dial("tcp", fmt.Sprintf("%s:%d", configBase.Redis.Host, configBase.Redis.Port),
+			redis.DialPassword(fmt.Sprint(configBase.Redis.Password)))
 		},
 	}
 }

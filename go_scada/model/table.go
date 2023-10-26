@@ -39,7 +39,7 @@ func (WindFarm) TableName() string {
 // 风机表
 type Fan struct {
 	Id          uint64  `gorm:"column:id;primaryKey;autoIncrement;not null" json:"id"`       // 风机id
-	Type 	  	int8    `gorm:"column:type;type:int;not null" json:"type"`                   // 风机类型
+	Type 	  	string  `gorm:"column:type;type:varchar(64);not null" json:"type"`           // 风机类型
 	Name        string  `gorm:"column:name;type:varchar(255);not null" json:"name"`          // 风机名称
 	Power       float32 `gorm:"column:power;type:float;not null" json:"power"`               // 风机功率
 	Status      int8    `gorm:"column:status;type:int;not null" json:"status"`               // 风机状态

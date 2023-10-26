@@ -36,7 +36,7 @@ import PowerChart from "./components/powerchart"; //引入组件
 import WindDirection from "./components/winddirection"; //引入组件
 import FanTime from "./components/fantime"; //引入组件
 export default {
-  name: "WindFarmMap",
+  name: "Statistics",
   components: {
     FanBaseInfo,
     PowerStat,

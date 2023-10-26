@@ -28,3 +28,4 @@ mysqlnd:
 redis:
   host: 127.0.0.1
   port: 6339
+  password: 123456

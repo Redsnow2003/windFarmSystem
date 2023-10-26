@@ -46,6 +46,7 @@ type Config struct {
 	Redis struct {
 		Host	 string `yaml:"host"`		// 主机
 		Port	 int `yaml:"port"`		// 端口
+		Password string `yaml:"password"`	// 密码
 	}
 }
 
