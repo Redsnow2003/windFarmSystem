@@ -50,6 +50,7 @@ func Init() *gin.Engine {
 	r.GET("/fan/getFanWindDirectionInfo", module.GetFanWindDirectionInfo)
 	r.GET("/fan/getFanReferencePowerInfo", module.GetFanReferencePowerInfo)
 	r.GET("/fan/getFanPowerCurveInfo", module.GetFanPowerCurveInfo)
+	r.GET("/datato/getCollectRTUInfo", module.GetCollectRTU)
 
 	r.NoRoute(authMiddleware.MiddlewareFunc(), func(c *gin.Context) {
 		c.JSON(404, gin.H{"code": 404, "message": "Page not found"})

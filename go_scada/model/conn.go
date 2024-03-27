@@ -33,9 +33,35 @@ func newMysqlConn() *gorm.DB {
 	return db
 }
 
+func newMysqlConn2() *gorm.DB {
+	//读取配置文件
+	configBase,err := config.InitConfig()
+	if err != nil {
+		logger.Fatalf("读取配置信息失败：%v",err)
+	}
+	//连接数据库
+	username := configBase.MySqlnd.Username
+	password := configBase.MySqlnd.Password
+	host 	:= configBase.MySqlnd.Host
+	port 	:= configBase.MySqlnd.Port
+	database := configBase.MySqlnd.Database2
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",username,password,host,port,database)
+	db,err := gorm.Open(mysql.Open(dsn),&gorm.Config{})
+	if err != nil {
+		logger.Fatalf("连接数据库失败：%v",err)
+		return nil
+	}
+	sqlDB,_ := db.DB()
+	sqlDB.SetMaxIdleConns(20)
+	sqlDB.SetMaxOpenConns(100)
+	return db
+}
+
 var Db *gorm.DB
+var Db2 *gorm.DB
 
 // 初始化数据库连接
 func init() {
 	Db = newMysqlConn()
+	Db2 = newMysqlConn2()
 }

@@ -26,6 +26,7 @@ const FaultSummary = () => import('@/views/scada/faultsummary/faultsummary')
 const ManualControl = () => import('@/views/scada/manualcontrol/manualcontrol')
 const Warning = () => import('@/views/scada/warning/warning')
 const Report = () => import('@/views/scada/report/report')
+const SimData = () => import('@/views/scada/tools/simdata')
 
 Vue.use(Router)
 
@@ -159,6 +160,21 @@ var router = new Router({
           path: 'Report',
           name: '报表',
           component: Report
+        },
+        {
+          path: 'tools',
+          redirect: '/tools/simdata',
+          name: '工具箱',
+          component: {
+            render (c) { return c('router-view') }
+          },
+          children: [
+            {
+              path: '/tools/simdata',
+              name: '模拟数据',
+              component: SimData
+            }
+          ]
         },
       ]
     }

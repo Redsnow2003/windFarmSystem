@@ -207,3 +207,20 @@ type ReferencePower struct {
 func (ReferencePower) TableName() string {
 	return "reference_power"
 }
+
+////////////////////////////////////////// 以下为ubox表 //////////////////////////////////////////
+type RTU struct {
+	Id         	uint64 	`gorm:"column:id;primaryKey;autoIncrement;not null" json:"id"`      	// RTU id
+	Name       	string 	`gorm:"column:name;type:varchar(255);not null" json:"name"`         	// RTU名称
+	Aliasname  	string 	`gorm:"column:aliasname;type:varchar(255)" json:"aliasname"`            // RTU 别名
+	Type		uint8 	`gorm:"column:type;type:int" json:"type"`            					// RTU 类型
+	Description string 	`gorm:"column:description;type:varchar(255)" json:"description"`        // RTU 描述
+	Protocolid 	string 	`gorm:"column:protocolid;type:varchar(255)" json:"protocolid"`         	// 协议ID
+	Mediatype 	uint8 	`gorm:"column:mediatype;type:int" json:"mediatype"`         			// 设备协议类型
+	Address 	string 	`gorm:"column:address;type:varchar(255)" json:"address"`         		// 设备IP端口地址
+	Linkpara 	string 	`gorm:"column:linkpara;type:varchar(512)" json:"linkpara"`         		// 其他连接参数
+}
+
+func (RTU) TableName() string {
+	return "rtu"
+}

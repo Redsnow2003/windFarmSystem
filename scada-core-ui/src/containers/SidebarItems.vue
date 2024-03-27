@@ -133,6 +133,19 @@ export default
             to: '/report',
             icon: 'cil-indent-increase'
           },
+          {
+            _name: 'CSidebarNavDropdown',
+            name: '工具箱',
+            route: '/tools',
+            icon: 'cil-indent-increase',
+            items: [
+              {
+                name: '模拟数据',
+                icon: 'cil-indent-increase',
+                to: '/tools/simdata'
+              },
+            ]
+          },
           ]
     
     }]

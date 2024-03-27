@@ -40,6 +40,7 @@ type Config struct {
 		Host     string `yaml:"host"`		// 主机
 		Port     string `yaml:"port"`		// 端口
 		Database string `yaml:"database"`	// 数据库
+		Database2 string `yaml:"database2"`	// 数据库2
 	}
 
 	// redis配置
